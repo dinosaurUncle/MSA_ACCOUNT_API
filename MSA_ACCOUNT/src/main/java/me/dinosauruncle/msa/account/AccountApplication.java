@@ -1,13 +1,14 @@
 package me.dinosauruncle.msa.account;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-public class AccountApplication {
-
+class AccountApplication {
     public static void main(String[] args) {
         SpringApplication.run(AccountApplication.class, args);
     }
-
 }

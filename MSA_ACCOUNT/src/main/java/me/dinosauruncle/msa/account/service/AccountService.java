@@ -1,12 +1,22 @@
 package me.dinosauruncle.msa.account.service;
 
+import me.dinosauruncle.msa.account.domain.Account;
 import org.springframework.stereotype.Service;
 
-@Service
-public interface AccountService {
+import java.util.Map;
 
-    public boolean isId(String id);
-    public boolean isUsePassword(String password);
-    public String findNameAndEmailReturnId(String name, String email);
-    public boolean login(String id, String password);
+@Service
+public abstract class AccountService {
+
+    protected Map<String, Object> map;
+
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
+    }
+
+    public abstract boolean isId(String id);
+    public abstract boolean isUsePassword(String password);
+    public abstract String findNameAndEmailReturnId(String name, String email);
+    public abstract Account login(Account account);
+    public abstract Map<String, Object> restReturnForm(String key, Object value);
 }

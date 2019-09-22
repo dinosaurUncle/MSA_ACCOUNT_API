@@ -1,7 +1,7 @@
 package me.dinosauruncle.msa.account.controller;
 
 import me.dinosauruncle.msa.account.domain.Account;
-import me.dinosauruncle.msa.account.repository.AccountRepository;
+import me.dinosauruncle.msa.account.repository.MsaAccountRepository;
 import me.dinosauruncle.msa.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@RestController(value = "/msa")
 public class AccountController {
-    @Autowired
-    private AccountRepository accountRepository;
+    private MsaAccountRepository accountRepository;
 
     @Autowired
     private AccountService accountService;
+
+    private Map<String, Object> map;
+    @Autowired
+    public AccountController(MsaAccountRepository accountRepository){
+        this.accountRepository = accountRepository;
+        map = new HashMap<String, Object>();
+    }
 
     @GetMapping("/account")
     public List<Account> getAccounts(){
@@ -57,12 +63,40 @@ public class AccountController {
 
     @DeleteMapping("/account/{id}")
     public Map<String, Object> deleteAccount(@PathVariable("id") String id){
-        Map<String, Object>  map = new HashMap<String, Object>();
+        accountService.setMap(map);
+        map.clear();
         map.put("isDelete", "completed");
         map.put("account", getAccountById(id));
         accountRepository.deleteById(id);
         return map;
     }
+
+    @GetMapping("account/isId/{id}")
+    public Map<String, Object> isId(@PathVariable("id") String id) {
+        accountService.setMap(map);
+        return accountService.restReturnForm("isId", accountService.isId(id));
+    }
+
+    @PostMapping("account/password")
+    public Map<String, Object> isUsePassword(@RequestBody Account account) {
+        accountService.setMap(map);
+        return accountService.restReturnForm("isUsePassword", accountService.isUsePassword(account.getPassword()));
+    }
+
+    @GetMapping("account/name/email/{name}/{email}")
+    public Map<String, Object> findNameAndEmailReturnId(
+            @PathVariable("name") String name, @PathVariable("email") String email){
+        accountService.setMap(map);
+        return accountService.restReturnForm("id", accountService.findNameAndEmailReturnId(name, email));
+    }
+
+    @PostMapping("account/login")
+    public Map<String, Object> login(@RequestBody Account account){
+        accountService.setMap(map);
+        return accountService.restReturnForm("account", account);
+    }
+
+
 
 
 }
