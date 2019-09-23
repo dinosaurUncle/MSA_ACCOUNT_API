@@ -8,14 +8,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MsaAccountRepository extends JpaRepository<Account, String> {
-/*
-    @Query("SELECT a.id FROM ACCOUNT a  WHERE a.name = :name AND a.email = :email")
+
+    @Query(value = "SELECT a.id FROM account a  WHERE a.name = :name AND a.email = :email"
+    , nativeQuery = true)
     String selectId(@Param("name") String name, @Param("email") String email);
 
-    @Query("SELECT a FROM ACCOUNT a WHERE a.id = :id AND a.password = :password")
+    @Query(value = "SELECT a FROM ACCOUNT a WHERE a.id = :id AND a.password = :password"
+    , nativeQuery = true)
     Account login(@Param("id") String id,
                                  @Param("password") String password);
 
- */
 
 }

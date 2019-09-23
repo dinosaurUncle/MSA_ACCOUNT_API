@@ -31,14 +31,12 @@ public class AccountServiceImpl extends AccountService{
 
     @Override
     public String findNameAndEmailReturnId(String name, String email) {
-        //return accountRepository.selectId(name, email);
-        return null;
+        return accountRepository.selectId(name, email);
     }
 
     @Override
     public Account login(Account account) {
-        //return accountRepository.login(account.getId(), account.getPassword());
-        return null;
+        return accountRepository.login(account.getId(), account.getPassword());
     }
 
     @Override

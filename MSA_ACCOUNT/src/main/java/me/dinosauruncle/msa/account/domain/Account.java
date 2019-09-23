@@ -1,34 +1,23 @@
 package me.dinosauruncle.msa.account.domain;
 
-import lombok.*;
-
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
-@Data
-@Table(name= "account")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Account {
 
-    @Id
-    @Column(name = "id")
+    @Id @Size(max = 250)
     private String id;
 
-    @Column(name="name")
     private String name;
 
-    @Column(name="password")
     private String password;
 
-    @Column(name="gender")
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
 
-    @Column(name="email")
     private String email;
 
-    @Column(name="phone")
     private String phone;
 
     public String getId() {
