@@ -4,7 +4,7 @@ MSA_USER is first project that msa project of all became basic. this project ext
 
 ### mysql 도커 컨테이너 생성
 docker run -d \
--p 2012:3306 \]
+-p 2012:3306 \
 --name mysql-docker-container \
 -e MYSQL_ROOT_PASSWORD=root123 \
 -e MYSQL_DATABASE=msa_account \
