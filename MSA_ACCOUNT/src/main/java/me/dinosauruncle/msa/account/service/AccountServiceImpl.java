@@ -2,6 +2,8 @@ package me.dinosauruncle.msa.account.service;
 
 import me.dinosauruncle.msa.account.domain.Account;
 import me.dinosauruncle.msa.account.repository.MsaAccountRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,21 @@ import java.util.Set;
 
 @Service
 public class AccountServiceImpl extends AccountService{
-
+    private static Logger logger = LogManager.getLogger();
     @Autowired
     private MsaAccountRepository accountRepository;
     private Map<String, Object> tempMap = new HashMap<String, Object>();
 
     @Override
     public boolean isId(String id) {
-        Account account = accountRepository.findById(id).get();
+        Account account = null;
+        try {
+             account = accountRepository.findById(id).get();
+        } catch (Exception e){
+            logger.error("id에 해당하는 계정이 존재하지 않습니다");
+            logger.error(e);
+        }
+
         if (account != null) return true;
         else return false;
     }
