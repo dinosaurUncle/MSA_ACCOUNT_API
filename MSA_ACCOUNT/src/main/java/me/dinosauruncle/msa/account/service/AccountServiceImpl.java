@@ -112,4 +112,19 @@ public class AccountServiceImpl extends AccountService{
     private String passwordValidErrorMessage (String type){
         return "비밀번호에" + type + "가 폼함되어 있지 않습니다";
     }
+
+    @Override
+    public Map<String, Object> newAccount(Account account) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            Account returnAccount = accountRepository.save(account);
+            map.put("account", returnAccount);
+            map.put("state", "S");
+        } catch (Exception e) {
+            logger.error("계정생성 실패");
+            logger.error(e);
+            map.put("state", "F");
+        }
+        return map;
+    }
 }

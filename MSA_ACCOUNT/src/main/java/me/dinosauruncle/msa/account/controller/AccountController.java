@@ -39,8 +39,8 @@ public class AccountController {
     }
 
     @PostMapping("/account")
-    public Account newAccount(@RequestBody Account account){
-        return accountRepository.save(account);
+    public Map<String, Object> newAccount(@RequestBody Account account){
+        return accountService.newAccount(account);
     }
 
     @PutMapping("/account/{id}")

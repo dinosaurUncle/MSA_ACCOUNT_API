@@ -2,6 +2,7 @@ package me.dinosauruncle.msa.account.service;
 
 import me.dinosauruncle.msa.account.domain.Account;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
@@ -19,4 +20,5 @@ public abstract class AccountService {
     public abstract String findNameAndEmailReturnId(String name, String email);
     public abstract Account login(Account account);
     public abstract Map<String, Object> restReturnForm(String key, Object value);
+    public abstract Map<String, Object> newAccount(Account account);
 }
