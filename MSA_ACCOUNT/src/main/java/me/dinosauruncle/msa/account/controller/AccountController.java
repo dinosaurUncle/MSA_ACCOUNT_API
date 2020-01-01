@@ -39,8 +39,11 @@ public class AccountController {
     }
 
     @PostMapping("/account")
-    public Map<String, Object> newAccount(@RequestBody Account account){
-        return accountService.newAccount(account);
+    public Map<String, Object> newAccount(@RequestBody Account account)
+    {
+        accountService.setMap(map);
+        accountService.restReturnForm("account", account);
+        return accountService.addKeyEndValue("state", accountService.newAccountResult(account));
     }
 
     @PutMapping("/account/{id}")
@@ -79,12 +82,6 @@ public class AccountController {
     public Map<String, Object> isId(@PathVariable("id") String id) {
         accountService.setMap(map);
         return accountService.restReturnForm("isId", accountService.isId(id));
-    }
-
-    @PostMapping("account/password")
-    public Map<String, Object> isUsePassword(@RequestBody Account account) {
-        accountService.setMap(map);
-        return accountService.restReturnForm("isUsePassword", accountService.isUsePassword(account.getPassword()));
     }
 
     @GetMapping("account/name/email/{name}/{email}")

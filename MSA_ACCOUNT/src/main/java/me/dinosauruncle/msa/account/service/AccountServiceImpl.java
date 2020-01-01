@@ -17,7 +17,6 @@ public class AccountServiceImpl extends AccountService{
     private static Logger logger = LogManager.getLogger();
     @Autowired
     private MsaAccountRepository accountRepository;
-    private Map<String, Object> tempMap = new HashMap<String, Object>();
 
     @Override
     public boolean isId(String id) {
@@ -26,16 +25,9 @@ public class AccountServiceImpl extends AccountService{
              account = accountRepository.findById(id).get();
         } catch (Exception e){
             logger.error("id에 해당하는 계정이 존재하지 않습니다");
-            logger.error(e);
         }
-
         if (account != null) return true;
         else return false;
-    }
-
-    @Override
-    public boolean isUsePassword(String password) {
-        return isPasswordValidation(password);
     }
 
     @Override
@@ -51,80 +43,25 @@ public class AccountServiceImpl extends AccountService{
     @Override
     public Map<String, Object> restReturnForm(String key, Object value){
         map.clear();
-        if (!tempMap.isEmpty()) {
-            Set<String> keyList = tempMap.keySet();
-            Iterator<String> iterator = keyList.iterator();
-            while(iterator.hasNext()){
-                String tempKey = iterator.next();
-                map.put(tempKey, tempMap.get(tempKey));
-            }
-            tempMap.clear();
-        }
         map.put(key, value);
         return map;
     }
 
-    private boolean isPasswordValidation(String text){
-        char[] specialChars = {'!', '@', '#', '$', '%',
-                '^', '&', '*', '(', ')', '-', '_', '+', '=',
-                '~', '`', ';', ':', '<', '>', '?', '/'};
-        char[] chars = text.toCharArray();
-        boolean isUpperCase = false;
-        boolean isLowerCase = false;
-        boolean isDigit = false;
-        boolean isSpecialChar =false;
-        boolean result = false;
-
-        for (char ch : chars){
-            if (Character.isUpperCase(ch)) isUpperCase = true;
-        }
-
-        for (char ch : chars){
-            if (Character.isLowerCase(ch)) isLowerCase = true;
-        }
-
-        for (char ch : chars){
-            if (Character.isDigit(ch)) isDigit = true;
-        }
-        for (char ch : chars){
-            for (char ch2 : specialChars){
-                if (ch == ch2) isSpecialChar = true;
-            }
-        }
-
-        if (isUpperCase & isLowerCase & isDigit & isSpecialChar){
-            result = true;
-        } else {
-            String key = "ErrorMessage";
-            if (!isUpperCase) {
-                tempMap.put(key, passwordValidErrorMessage("대문자"));
-            } else if (!isLowerCase) {
-                tempMap.put(key, passwordValidErrorMessage("소문자"));
-            } else if (!isDigit) {
-                tempMap.put(key, passwordValidErrorMessage("숫자"));
-            } else if (!isSpecialChar) {
-                tempMap.put(key, passwordValidErrorMessage("특수문자"));
-            }
+    @Override
+    public String newAccountResult(Account account) {
+        String result = null;
+        try {
+            Account returnAccount = accountRepository.save(account);
+            result = "S";
+        } catch (Exception e) {
+            result = "F";
         }
         return result;
     }
 
-    private String passwordValidErrorMessage (String type){
-        return "비밀번호에" + type + "가 폼함되어 있지 않습니다";
-    }
-
     @Override
-    public Map<String, Object> newAccount(Account account) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            Account returnAccount = accountRepository.save(account);
-            map.put("account", returnAccount);
-            map.put("state", "S");
-        } catch (Exception e) {
-            logger.error("계정생성 실패");
-            logger.error(e);
-            map.put("state", "F");
-        }
+    public Map<String, Object> addKeyEndValue(String key, Object value) {
+        map.put(key, value);
         return map;
     }
 }
