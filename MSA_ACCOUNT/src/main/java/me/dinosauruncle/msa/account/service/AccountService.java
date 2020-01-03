@@ -17,8 +17,8 @@ public abstract class AccountService {
 
     public abstract boolean isId(String id);
     public abstract String findNameAndEmailReturnId(String name, String email);
-    public abstract Account login(Account account);
     public abstract Map<String, Object> addKeyEndValue(String key, Object value);
     public abstract Map<String, Object> restReturnForm(String key, Object value);
     public abstract String newAccountResult (Account account);
+    public abstract boolean login(Account account);
 }

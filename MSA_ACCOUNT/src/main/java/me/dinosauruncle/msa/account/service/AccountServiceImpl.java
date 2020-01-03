@@ -5,6 +5,7 @@ import me.dinosauruncle.msa.account.repository.MsaAccountRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,6 +18,9 @@ public class AccountServiceImpl extends AccountService{
     private static Logger logger = LogManager.getLogger();
     @Autowired
     private MsaAccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean isId(String id) {
@@ -36,11 +40,6 @@ public class AccountServiceImpl extends AccountService{
     }
 
     @Override
-    public Account login(Account account) {
-        return accountRepository.login(account.getId(), account.getPassword());
-    }
-
-    @Override
     public Map<String, Object> restReturnForm(String key, Object value){
         map.clear();
         map.put(key, value);
@@ -51,6 +50,7 @@ public class AccountServiceImpl extends AccountService{
     public String newAccountResult(Account account) {
         String result = null;
         try {
+            passwordTransEncode(account);
             Account returnAccount = accountRepository.save(account);
             result = "S";
         } catch (Exception e) {
@@ -63,5 +63,22 @@ public class AccountServiceImpl extends AccountService{
     public Map<String, Object> addKeyEndValue(String key, Object value) {
         map.put(key, value);
         return map;
+    }
+
+    @Override
+    public boolean login(Account account) {
+        boolean result = false;
+        Account selectAccount = accountRepository.findById(account.getId()).get();
+        if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
+            result = true;
+            logger.info("로그인 성공");
+        } else {
+            logger.info("로그인 실패");
+        }
+        return result;
+    }
+
+    private void passwordTransEncode(Account account) {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
     }
 }

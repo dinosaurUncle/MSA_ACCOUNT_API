@@ -13,10 +13,4 @@ public interface MsaAccountRepository extends JpaRepository<Account, String> {
     , nativeQuery = true)
     String selectId(@Param("name") String name, @Param("email") String email);
 
-    @Query(value = "SELECT a FROM ACCOUNT a WHERE a.id = :id AND a.password = :password"
-    , nativeQuery = true)
-    Account login(@Param("id") String id,
-                                 @Param("password") String password);
-
-
 }
