@@ -35,7 +35,7 @@ public class AccountController {
 
     @GetMapping("/account/{id}")
     public Account getAccountById(@PathVariable("id") String id) {
-        return accountRepository.findById(id).get();
+        return accountService.findById(id);
     }
 
     @PostMapping("/account")
@@ -93,8 +93,12 @@ public class AccountController {
 
     @PostMapping("account/login")
     public Map<String, Object> login(@RequestBody Account account){
+        final boolean loginResult = accountService.login(account);
         accountService.setMap(map);
-        return accountService.restReturnForm("login", accountService.login(account));
+        accountService.restReturnForm("login", loginResult);
+        return loginResult ?
+                accountService.addKeyEndValue("account", accountService.findById(account.getId()))
+                : accountService.addKeyEndValue("account", null);
     }
 
 

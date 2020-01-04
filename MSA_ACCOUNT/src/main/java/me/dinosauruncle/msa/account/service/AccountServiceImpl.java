@@ -81,4 +81,9 @@ public class AccountServiceImpl extends AccountService{
     private void passwordTransEncode(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
     }
+
+    @Override
+    public Account findById(String id) {
+        return accountRepository.findById(id).get();
+    }
 }
