@@ -38,6 +38,12 @@ public class AccountController {
         return accountService.findById(id);
     }
 
+    @GetMapping("/account/password/{email}")
+    public String createTokenAndSendEmail(@PathVariable("email") String email) {
+        accountService.setMap(map);
+        return null;
+    }
+
     @PostMapping("/account")
     public Map<String, Object> newAccount(@RequestBody Account account)
     {
@@ -84,7 +90,7 @@ public class AccountController {
         return accountService.restReturnForm("isId", accountService.isId(id));
     }
 
-    @GetMapping("account/name/email/{name}/{email}")
+    @GetMapping("account/selectId/{name}/{email}")
     public Map<String, Object> findNameAndEmailReturnId(
             @PathVariable("name") String name, @PathVariable("email") String email){
         accountService.setMap(map);
