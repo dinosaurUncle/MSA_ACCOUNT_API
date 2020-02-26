@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AccountServiceImpl extends AccountService{
@@ -66,16 +63,34 @@ public class AccountServiceImpl extends AccountService{
     }
 
     @Override
-    public boolean login(Account account) {
+    public Map<String, Object> login(Account account) {
+        map.clear();
         boolean result = false;
-        Account selectAccount = accountRepository.findById(account.getId()).get();
-        if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
-            result = true;
-            logger.info("로그인 성공");
-        } else {
-            logger.info("로그인 실패");
+        Account selectAccount = null;
+        try {
+            selectAccount = accountRepository.findById(account.getId()).get();
+            if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
+                map.put("login", true);
+                logger.info("로그인 성공");
+            } else {
+                String message = "ID와 비밀번호가 불일치 합니다";
+                map.put("login", false);
+                map.put("message", message);
+                logger.info("로그인 실패");
+            }
+        } catch (NoSuchElementException e){
+            String message = "존재하지 않는 아이디 입니다";
+            map.put("login", false);
+            map.put("message", message);
+            logger.error(message);
+
+        } catch (NullPointerException e){
+            String message = "존재하지 않는 아이디 입니다";
+            map.put("login", false);
+            map.put("message", message);
+            logger.error(message);
         }
-        return result;
+        return map;
     }
 
     private void passwordTransEncode(Account account) {
@@ -84,6 +99,13 @@ public class AccountServiceImpl extends AccountService{
 
     @Override
     public Account findById(String id) {
-        return accountRepository.findById(id).get();
+        Account account = null;
+        try {
+            account =accountRepository.findById(id).get();
+        } catch (NoSuchElementException e){
+            String message = "존재하지 않는 아이디 입니다";
+            logger.error(message);
+        }
+        return account;
     }
 }

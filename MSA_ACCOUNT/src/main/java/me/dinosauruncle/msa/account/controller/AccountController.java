@@ -99,12 +99,10 @@ public class AccountController {
 
     @PostMapping("account/login")
     public Map<String, Object> login(@RequestBody Account account){
-        final boolean loginResult = accountService.login(account);
-        accountService.setMap(map);
-        accountService.restReturnForm("login", loginResult);
-        return loginResult ?
+        final Map<String, Object> loginResult = accountService.login(account);
+        return Boolean.valueOf(String.valueOf(map.get("login"))) ?
                 accountService.addKeyEndValue("account", accountService.findById(account.getId()))
-                : accountService.addKeyEndValue("account", null);
+                : loginResult;
     }
 
 
