@@ -21,73 +21,42 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    private Map<String, Object> map;
     @Autowired
     public AccountController(MsaAccountRepository accountRepository){
         this.accountRepository = accountRepository;
-        map = new HashMap<String, Object>();
+    }
+    @PostMapping("/account")
+    public Map<String, Object> save(@RequestBody Account account){
+        return accountService.save(account);
     }
 
+    @PutMapping("/account")
+    public Map<String, Object> update(@RequestBody Account account){
+        return accountService.update(account);
+    }
+    @GetMapping("/account/{id}")
+    public Map<String, Object> getAccountById(@PathVariable("id") String id) {
+        return accountService.findById(id);
+    }
     @GetMapping("/account")
     public List<Account> getAccounts(){
         return accountRepository.findAll();
     }
 
-    @GetMapping("/account/{id}")
-    public Account getAccountById(@PathVariable("id") String id) {
-        return accountService.findById(id);
-    }
-
     @GetMapping("/account/password/{email}")
     public String createTokenAndSendEmail(@PathVariable("email") String email) {
-        accountService.setMap(map);
         return null;
     }
 
-    @PostMapping("/account")
-    public Map<String, Object> newAccount(@RequestBody Account account)
-    {
-        accountService.setMap(map);
-        accountService.restReturnForm("account", account);
-        return accountService.addKeyEndValue("state", accountService.newAccountResult(account));
-    }
-
-    @PutMapping("/account/{id}")
-    public Account updateAccount(@PathVariable("id") String id,
-                                 @RequestBody Account account){
-        return accountRepository.findById(id)
-                .map(inputAccount -> {
-                    if (account.getName() != null)
-                        inputAccount.setName(account.getName());
-                    if (account.getPassword() != null)
-                        inputAccount.setPassword((account.getPassword()));
-                    if (account.getGender() != null)
-                        inputAccount.setGender(account.getGender());
-                    if (account.getEmail() != null)
-                        inputAccount.setEmail(account.getEmail());
-                    if (account.getPhone() != null)
-                        inputAccount.setPhone(account.getPhone());
-                    return accountRepository.save(inputAccount);
-                }).orElseGet(() -> {
-                   account.setId(id);
-                   return accountRepository.save(account);
-                });
-    }
 
     @DeleteMapping("/account/{id}")
     public Map<String, Object> deleteAccount(@PathVariable("id") String id){
-        accountService.setMap(map);
-        map.clear();
-        map.put("isDelete", "completed");
-        map.put("account", getAccountById(id));
-        accountRepository.deleteById(id);
-        return map;
+        return accountService.deleteAccount(id);
     }
 
     @GetMapping("account/isId/{id}")
     public Map<String, Object> isId(@PathVariable("id") String id) {
-        accountService.setMap(map);
-        return accountService.restReturnForm("isId", accountService.isId(id));
+        return accountService.isId(id);
     }
 
     @GetMapping("account/selectId/{name}/{email}")

@@ -19,93 +19,118 @@ public class AccountServiceImpl extends AccountService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private Map<String, Object> parameterMap;
+
     @Override
-    public boolean isId(String id) {
-        Account account = null;
+    public Map<String, Object> save(Account account) {
+        Account returnAccount = null;
         try {
-             account = accountRepository.findById(id).get();
+            passwordTransEncode(account);
+            returnAccount = accountRepository.save(account);
+        } catch (Exception e) {
+            logger.error("account saving occur error");
+        }
+        return saveAndUpdate(returnAccount);
+    }
+
+    @Override
+    public Map<String, Object> update(Account account) {
+        try {
+            Account getAccount = (Account) findById(account.getId()).get("account");
+            account.setPassword(getAccount.getPassword());
+        } catch (Exception e) {
+            logger.error("account updating occur error");
+        }
+        return saveAndUpdate(account);
+    }
+
+    public Map<String, Object> saveAndUpdate(Account account) {
+        try {
+            Account returnAccount = accountRepository.save(account);
+            parameterMap.put("account", returnAccount);
+            parameterMap.put("state", "S");
+        } catch (Exception e) {
+            parameterMap.put("state", "F");
+        }
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> findById(String id) {
+        try {
+            parameterMap.put("account", accountRepository.findById(id).get());
+        } catch (NoSuchElementException e){
+            String message = "존재하지 않는 아이디 입니다";
+            logger.error(message);
+            parameterMap.put("message", message);
+        }
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> getAccounts() {
+        parameterMap.put("accounts", accountRepository.findAll());
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> deleteAccount(String id) {
+        Account account = accountRepository.findById(id).get();
+        parameterMap.put("account", account);
+        accountRepository.delete(account);
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> isId(String id) {
+        boolean result = false;
+        try {
+             result = accountRepository.existsById(id);
         } catch (Exception e){
             logger.error("id에 해당하는 계정이 존재하지 않습니다");
         }
-        if (account != null) return true;
-        else return false;
+        parameterMap.put("result", String.valueOf(result));
+        return parameterMap;
     }
 
     @Override
-    public String findNameAndEmailReturnId(String name, String email) {
-        return accountRepository.selectId(name, email);
+    public Map<String, Object> findNameAndEmailReturnId(String name, String email) {
+        parameterMap.put("id", accountRepository.selectId(name, email));
+        return parameterMap;
     }
 
-    @Override
-    public Map<String, Object> restReturnForm(String key, Object value){
-        map.clear();
-        map.put(key, value);
-        return map;
-    }
-
-    @Override
-    public String newAccountResult(Account account) {
-        String result = null;
-        try {
-            passwordTransEncode(account);
-            Account returnAccount = accountRepository.save(account);
-            result = "S";
-        } catch (Exception e) {
-            result = "F";
-        }
-        return result;
-    }
-
-    @Override
-    public Map<String, Object> addKeyEndValue(String key, Object value) {
-        map.put(key, value);
-        return map;
-    }
 
     @Override
     public Map<String, Object> login(Account account) {
-        map.clear();
-        boolean result = false;
         Account selectAccount = null;
         try {
             selectAccount = accountRepository.findById(account.getId()).get();
             if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
-                map.put("login", true);
+                parameterMap.put("login", true);
                 logger.info("로그인 성공");
             } else {
                 String message = "ID와 비밀번호가 불일치 합니다";
-                map.put("login", false);
-                map.put("message", message);
+                parameterMap.put("login", false);
+                parameterMap.put("message", message);
                 logger.info("로그인 실패");
             }
         } catch (NoSuchElementException e){
             String message = "존재하지 않는 아이디 입니다";
-            map.put("login", false);
-            map.put("message", message);
+            parameterMap.put("login", false);
+            parameterMap.put("message", message);
             logger.error(message);
 
         } catch (NullPointerException e){
             String message = "존재하지 않는 아이디 입니다";
-            map.put("login", false);
-            map.put("message", message);
+            parameterMap.put("login", false);
+            parameterMap.put("message", message);
             logger.error(message);
         }
-        return map;
+        return parameterMap;
     }
 
     private void passwordTransEncode(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-    }
-
-    @Override
-    public Account findById(String id) {
-        Account account = null;
-        try {
-            account =accountRepository.findById(id).get();
-        } catch (NoSuchElementException e){
-            String message = "존재하지 않는 아이디 입니다";
-            logger.error(message);
-        }
-        return account;
     }
 }

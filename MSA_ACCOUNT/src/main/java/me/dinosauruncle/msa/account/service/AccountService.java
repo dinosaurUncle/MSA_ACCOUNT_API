@@ -8,18 +8,14 @@ import java.util.Map;
 
 @Service
 public abstract class AccountService {
+    public abstract Map<String, Object> save(Account account);
+    public abstract Map<String, Object> update(Account account);
+    public abstract Map<String, Object> findById(String id);
+    public abstract Map<String, Object> getAccounts();
+    public abstract Map<String, Object> deleteAccount(String id);
+    public abstract Map<String, Object> isId(String id);
+    public abstract Map<String, Object> findNameAndEmailReturnId(String name, String email);
 
-    protected Map<String, Object> map;
 
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
-    }
-
-    public abstract boolean isId(String id);
-    public abstract String findNameAndEmailReturnId(String name, String email);
-    public abstract Map<String, Object> addKeyEndValue(String key, Object value);
-    public abstract Map<String, Object> restReturnForm(String key, Object value);
-    public abstract Account findById(String id);
-    public abstract String newAccountResult (Account account);
     public abstract Map<String, Object> login(Account account);
 }
