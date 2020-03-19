@@ -108,7 +108,6 @@ public class AccountServiceImpl extends AccountService{
             selectAccount = accountRepository.findById(account.getId()).get();
             if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
                 parameterMap.put("login", true);
-                selectAccount.setPassword(null);
                 parameterMap.put("account", selectAccount);
                 logger.info("로그인 성공");
             } else {
