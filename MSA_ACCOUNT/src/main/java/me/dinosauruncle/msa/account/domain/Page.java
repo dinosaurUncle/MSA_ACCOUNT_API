@@ -1,5 +1,7 @@
 package me.dinosauruncle.msa.account.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,5 +48,21 @@ public class Page {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void update(Page page){
+        if(!(this.pageName.equals(page.pageName)) && StringUtils.isNotEmpty(page.pageName)) setPageName(page.pageName);
+        if(!(this.pageUrl.equals(page.pageUrl)) && StringUtils.isNotEmpty(page.pageUrl)) setPageUrl(page.pageUrl);
+        if(!(this.description.equals(page.description)) && StringUtils.isNotEmpty(page.description)) setDescription(page.description);
+    }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "pageId=" + pageId +
+                ", pageName='" + pageName + '\'' +
+                ", pageUrl='" + pageUrl + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

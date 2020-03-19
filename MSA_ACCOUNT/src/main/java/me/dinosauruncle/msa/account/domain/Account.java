@@ -1,7 +1,12 @@
 package me.dinosauruncle.msa.account.domain;
 
+
+
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+
 
 @Entity
 public class Account {
@@ -66,5 +71,36 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void update(Account account){
+        if ((!this.getName().equals(account.getName())) && StringUtils.isNotEmpty(account.getName()) ){
+            this.setName(account.getName());
+        }
+        if (!this.getGender().equals(account.getGender())
+                && (account.getGender() != null)){
+            this.setGender(account.getGender());
+        }
+        if (!this.getEmail().equals(account.getEmail())
+                && StringUtils.isNotEmpty(account.getEmail()) ){
+            this.setEmail(account.getEmail());
+        }
+        if (!this.getPhone().equals(account.getPhone())
+                && StringUtils.isNotEmpty(account.getPhone())){
+            this.setPhone(account.getPhone());
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

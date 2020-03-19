@@ -62,16 +62,12 @@ public class AccountController {
     @GetMapping("account/selectId/{name}/{email}")
     public Map<String, Object> findNameAndEmailReturnId(
             @PathVariable("name") String name, @PathVariable("email") String email){
-        accountService.setMap(map);
-        return accountService.restReturnForm("id", accountService.findNameAndEmailReturnId(name, email));
+        return accountService.findNameAndEmailReturnId(name, email);
     }
 
     @PostMapping("account/login")
     public Map<String, Object> login(@RequestBody Account account){
-        final Map<String, Object> loginResult = accountService.login(account);
-        return Boolean.valueOf(String.valueOf(map.get("login"))) ?
-                accountService.addKeyEndValue("account", accountService.findById(account.getId()))
-                : loginResult;
+        return accountService.login(account);
     }
 
 

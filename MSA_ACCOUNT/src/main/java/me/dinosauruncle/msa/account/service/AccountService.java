@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Map;
 
 @Service
-public abstract class AccountService {
+public abstract class AccountService extends DefaultService {
     public abstract Map<String, Object> save(Account account);
     public abstract Map<String, Object> update(Account account);
     public abstract Map<String, Object> findById(String id);

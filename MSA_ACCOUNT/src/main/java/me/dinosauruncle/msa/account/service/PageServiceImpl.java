@@ -11,39 +11,40 @@ import java.util.Map;
 
 @Transactional
 @Service
-public class PageServiceImpl implements  PageService {
+public class PageServiceImpl extends PageService {
 
-    private Map<String, Object> resultMap;
-    public PageServiceImpl(){
-        resultMap = new HashMap<String, Object>();
-    }
 
     @Autowired
     private PageRepository pageRepository;
 
     @Override
     public Map<String, Object> saveAndUpdate(Page page) {
-        resultMap.put("page", page);
+        parameterMap.put("page", page);
         pageRepository.save(page);
-        return resultMap;
+        return parameterMap;
     }
 
     @Override
     public Map<String, Object> getPage(Long pageId) {
-        return null;
+        parameterMap.put("page",pageRepository.findById(pageId));
+        return parameterMap;
     }
 
     @Override
     public Map<String, Object> delete(Long pageId) {
-        return null;
+        Page page = pageRepository.findById(pageId).get();
+        parameterMap.put("deletePage", page);
+        pageRepository.delete(page);
+        return parameterMap;
     }
 
     @Override
     public Map<String, Object> getPageList() {
-        return null;
+        parameterMap.put("pages", pageRepository.findAll());
+        return parameterMap;
     }
 
     public void resultMapClean(){
-        resultMap.clear();
+        parameterMap.clear();
     }
 }

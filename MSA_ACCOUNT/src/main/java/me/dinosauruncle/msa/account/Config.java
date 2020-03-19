@@ -1,5 +1,6 @@
 package me.dinosauruncle.msa.account;
 
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,4 +21,7 @@ public class Config {
 
     @Bean
     public Map<String, Object> parameterMap() {return new HashMap<String, Object>();}
+
+    @Bean
+    public ProxyFactoryBean proxyFactoryBean() { return new ProxyFactoryBean();}
 }

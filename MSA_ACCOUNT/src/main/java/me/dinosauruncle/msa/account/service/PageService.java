@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public interface PageService {
-    Map<String, Object> saveAndUpdate(Page page);
-    Map<String, Object> getPage(Long pageId);
-    Map<String, Object> delete(Long pageId);
-    Map<String, Object> getPageList();
+public abstract class PageService extends DefaultService {
+    public abstract Map<String, Object> saveAndUpdate(Page page);
+    public abstract Map<String, Object> getPage(Long pageId);
+    public abstract Map<String, Object> delete(Long pageId);
+    public abstract Map<String, Object> getPageList();
 }

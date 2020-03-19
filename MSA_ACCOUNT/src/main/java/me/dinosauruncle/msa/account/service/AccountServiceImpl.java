@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 @Service
@@ -18,9 +19,6 @@ public class AccountServiceImpl extends AccountService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private Map<String, Object> parameterMap;
 
     @Override
     public Map<String, Object> save(Account account) {
@@ -36,13 +34,15 @@ public class AccountServiceImpl extends AccountService{
 
     @Override
     public Map<String, Object> update(Account account) {
+        Account getAccount = null;
         try {
-            Account getAccount = (Account) findById(account.getId()).get("account");
-            account.setPassword(getAccount.getPassword());
+            getAccount = (Account) findById(account.getId()).get("account");
+            getAccount.update(account);
+
         } catch (Exception e) {
             logger.error("account updating occur error");
         }
-        return saveAndUpdate(account);
+        return saveAndUpdate(getAccount);
     }
 
     public Map<String, Object> saveAndUpdate(Account account) {
@@ -108,6 +108,8 @@ public class AccountServiceImpl extends AccountService{
             selectAccount = accountRepository.findById(account.getId()).get();
             if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
                 parameterMap.put("login", true);
+                selectAccount.setPassword(null);
+                parameterMap.put("account", selectAccount);
                 logger.info("로그인 성공");
             } else {
                 String message = "ID와 비밀번호가 불일치 합니다";
