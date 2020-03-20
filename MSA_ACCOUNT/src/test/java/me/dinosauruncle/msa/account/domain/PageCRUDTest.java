@@ -18,7 +18,7 @@ public class PageCRUDTest {
         Page page = new Page();
         page.setPageName("News");
         page.setPageUrl("/news");
-        page.setDescription("new page");
+        page.setDescription("news page");
         pageService.saveAndUpdate(page);
     }
 

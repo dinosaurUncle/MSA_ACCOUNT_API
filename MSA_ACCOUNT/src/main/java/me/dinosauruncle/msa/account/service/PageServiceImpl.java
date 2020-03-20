@@ -26,7 +26,7 @@ public class PageServiceImpl extends PageService {
 
     @Override
     public Map<String, Object> getPage(Long pageId) {
-        parameterMap.put("page",pageRepository.findById(pageId));
+        parameterMap.put("page",pageRepository.findById(pageId).get());
         return parameterMap;
     }
 

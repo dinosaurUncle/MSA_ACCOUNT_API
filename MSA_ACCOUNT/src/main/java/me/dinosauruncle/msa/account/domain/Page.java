@@ -2,9 +2,9 @@ package me.dinosauruncle.msa.account.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Page {
@@ -17,6 +17,9 @@ public class Page {
     private String pageUrl;
 
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "page")
+    private List<RoleMappingPage> roleMappingPages = new ArrayList<RoleMappingPage>();
 
     public Long getPageId() {
         return pageId;
