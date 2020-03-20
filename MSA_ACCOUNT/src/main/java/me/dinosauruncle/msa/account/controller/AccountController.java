@@ -2,6 +2,7 @@ package me.dinosauruncle.msa.account.controller;
 
 import me.dinosauruncle.msa.account.domain.Account;
 import me.dinosauruncle.msa.account.repository.MsaAccountRepository;
+import me.dinosauruncle.msa.account.service.AccountMappingPageService;
 import me.dinosauruncle.msa.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +16,11 @@ import java.util.Map;
 public class AccountController {
 
     @Autowired
-    private MsaAccountRepository accountRepository;
-
-    @Autowired
     private AccountService accountService;
 
     @Autowired
-    public AccountController(MsaAccountRepository accountRepository){
-        this.accountRepository = accountRepository;
-    }
+    private AccountMappingPageService accountMappingPageService;
+
     @PostMapping("/account")
     public Map<String, Object> save(@RequestBody Account account){
         return accountService.save(account);
@@ -38,8 +35,8 @@ public class AccountController {
         return accountService.getAccount(id);
     }
     @GetMapping("/account")
-    public List<Account> getAccounts(){
-        return accountRepository.findAll();
+    public Map<String, Object> getAccounts(){
+        return accountService.getAccounts();
     }
 
     @GetMapping("/account/password/{email}")
@@ -68,6 +65,9 @@ public class AccountController {
     public Map<String, Object> login(@RequestBody Account account){
         return accountService.login(account);
     }
+
+    @GetMapping("account/page/{id}")
+    public Map<String, Object> getPages(@PathVariable("id") String id) {return accountMappingPageService.byAccountIdGetPages(id);}
 
 
 
