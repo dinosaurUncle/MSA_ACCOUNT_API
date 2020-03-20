@@ -7,10 +7,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
 import java.util.*;
-
+@Transactional
 @Service
 public class AccountServiceImpl extends AccountService{
     private static Logger logger = LogManager.getLogger();
@@ -36,7 +36,7 @@ public class AccountServiceImpl extends AccountService{
     public Map<String, Object> update(Account account) {
         Account getAccount = null;
         try {
-            getAccount = (Account) findById(account.getId()).get("account");
+            getAccount = (Account) getAccount(account.getAccountId()).get("account");
             getAccount.update(account);
 
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class AccountServiceImpl extends AccountService{
     }
 
     @Override
-    public Map<String, Object> findById(String id) {
+    public Map<String, Object> getAccount(String id) {
         try {
             parameterMap.put("account", accountRepository.findById(id).get());
         } catch (NoSuchElementException e){
@@ -105,7 +105,7 @@ public class AccountServiceImpl extends AccountService{
     public Map<String, Object> login(Account account) {
         Account selectAccount = null;
         try {
-            selectAccount = accountRepository.findById(account.getId()).get();
+            selectAccount = accountRepository.findById(account.getAccountId()).get();
             if (passwordEncoder.matches(account.getPassword(), selectAccount.getPassword())){
                 parameterMap.put("login", true);
                 parameterMap.put("account", selectAccount);

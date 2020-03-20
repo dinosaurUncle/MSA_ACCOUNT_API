@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Transactional
+
 @RestController(value = "/msa")
 public class AccountController {
 
@@ -36,7 +35,7 @@ public class AccountController {
     }
     @GetMapping("/account/{id}")
     public Map<String, Object> getAccountById(@PathVariable("id") String id) {
-        return accountService.findById(id);
+        return accountService.getAccount(id);
     }
     @GetMapping("/account")
     public List<Account> getAccounts(){

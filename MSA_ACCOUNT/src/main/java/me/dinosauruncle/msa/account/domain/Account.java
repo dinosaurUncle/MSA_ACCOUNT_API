@@ -6,15 +6,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 public class Account {
 
     @Id @Size(max = 250)
-    private String id;
+    private String accountId;
 
-    private String name;
+    private String accountName;
 
     private String password;
 
@@ -25,20 +27,23 @@ public class Account {
 
     private String phone;
 
-    public String getId() {
-        return id;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+    private List<AccountMappingRole> accountMappingRoles = new ArrayList<AccountMappingRole>();
+
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
-    public String getName() {
-        return name;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getPassword() {
@@ -74,8 +79,8 @@ public class Account {
     }
 
     public void update(Account account){
-        if ((!this.getName().equals(account.getName())) && StringUtils.isNotEmpty(account.getName()) ){
-            this.setName(account.getName());
+        if ((!this.getAccountName().equals(account.getAccountName())) && StringUtils.isNotEmpty(account.getAccountName()) ){
+            this.setAccountName(account.getAccountName());
         }
         if (!this.getGender().equals(account.getGender())
                 && (account.getGender() != null)){
@@ -95,8 +100,8 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "+accountId='" + accountId + '\'' +
+                ", accountName='" + accountName + '\'' +
                 ", password='" + password + '\'' +
                 ", gender=" + gender +
                 ", email='" + email + '\'' +

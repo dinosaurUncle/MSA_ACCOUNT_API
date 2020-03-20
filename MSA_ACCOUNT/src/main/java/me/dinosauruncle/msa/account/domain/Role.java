@@ -16,6 +16,9 @@ public class Role {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")
     private List<RoleMappingPage> roleMappingPages = new ArrayList<RoleMappingPage>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")
+    private List<AccountMappingRole> accountMappingRoles = new ArrayList<AccountMappingRole>();
+
     public String getRoleId() {
         return roleId;
     }

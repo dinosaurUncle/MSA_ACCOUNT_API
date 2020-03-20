@@ -18,12 +18,23 @@ public class AccountCRUDTest {
 
     @Test
     public void save(){
+        /*
         Account account = new Account();
-        account.setId("test123");
+        account.setAccountId("test123");
         account.setPassword("test123");
-        account.setName("이지은");
+        account.setAccountName("이지은");
         account.setGender(Gender.FEMALE);
         account.setEmail("I-U@naver.com");
+        account.setPhone("010-1111-2222");
+        accountService.save(account);
+        */
+
+        Account account = new Account();
+        account.setAccountId("m05214");
+        account.setPassword("pass");
+        account.setAccountName("박종훈");
+        account.setGender(Gender.MALE);
+        account.setEmail("m05214@naver.com");
         account.setPhone("010-1111-2222");
         accountService.save(account);
     }
@@ -31,14 +42,14 @@ public class AccountCRUDTest {
     @Test
     public void update(){
         Account account = new Account();
-        account.setId("m05214");;
+        account.setAccountId("m05214");;
         account.setPhone("010-3333-4444");
         accountService.update(account);
     }
 
     @Test
     public void getAccount(){
-        accountService.findById("test123");
+        accountService.getAccount("test123");
     }
 
     @Test
@@ -49,7 +60,7 @@ public class AccountCRUDTest {
     @Test
     public void delete(){
         Account account = new Account();
-        account.setId("test123");;
+        account.setAccountId("test123");;
         accountService.deleteAccount("test123");
     }
 
@@ -61,7 +72,7 @@ public class AccountCRUDTest {
     @Test
     public void login(){
         Account account = new Account();
-        account.setId("m05214");
+        account.setAccountId("m05214");
         account.setPassword("pass");
         accountService.login(account);
     }
