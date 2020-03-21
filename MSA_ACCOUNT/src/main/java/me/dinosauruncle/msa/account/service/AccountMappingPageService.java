@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AccountMappingPageService extends DefaultService {
@@ -22,19 +24,15 @@ public class AccountMappingPageService extends DefaultService {
 
     public Map<String, Object> byAccountIdGetPages(String id){
         List<Page> pages = new ArrayList<Page>();
-        Map<Long, Long> pageNameMap = new HashMap();
         List<AccountMappingRole> accountMappingRoles = accountMappingRoleService.getAccountMappingRoleByAccountId(id);
         accountMappingRoles.forEach(accountMappingRole -> {
             List<RoleMappingPage> roleMappingPages =roleMappingPageService.getRoleMappingPageObjectByRoleId(accountMappingRole.getRole().getRoleId());
             roleMappingPages.forEach(roleMappingPage -> {
-                if (!pageNameMap.containsKey(roleMappingPage.getPage().getPageId())){
-                    pageNameMap.put(roleMappingPage.getPage().getPageId(), roleMappingPage.getPage().getPageId());
-                    pages.add(roleMappingPage.getPage());
-                }
-
+                pages.add(roleMappingPage.getPage());
             });
         });
-        parameterMap.put("pages", pages);
+        List<Page> distinctAfterPages =pages.stream().distinct().collect(Collectors.toList());
+        parameterMap.put("pages", distinctAfterPages);
         return parameterMap;
     }
 }
