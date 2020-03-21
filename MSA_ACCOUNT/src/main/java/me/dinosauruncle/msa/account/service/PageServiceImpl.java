@@ -31,6 +31,12 @@ public class PageServiceImpl extends PageService {
     }
 
     @Override
+    public Map<String, Object> getPageByName(String pageName) {
+        parameterMap.put("page",pageRepository.selectByPageName(pageName));
+        return parameterMap;
+    }
+
+    @Override
     public Map<String, Object> delete(Long pageId) {
         Page page = pageRepository.findById(pageId).get();
         parameterMap.put("deletePage", page);

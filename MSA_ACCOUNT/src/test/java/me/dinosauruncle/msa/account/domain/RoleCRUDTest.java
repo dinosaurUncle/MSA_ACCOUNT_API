@@ -14,14 +14,10 @@ import java.util.Map;
 public class RoleCRUDTest {
 
     @Autowired
-    PageService pageService;
-
-    @Autowired
     RoleService roleService;
 
     @Test
     public void save(){
-
         Role role = new Role();
         role.setRoleId("initiator");
         role.setRoleName("가입자");

@@ -30,11 +30,11 @@ public class AccountCRUDTest {
         */
 
         Account account = new Account();
-        account.setAccountId("m05214");
+        account.setAccountId("test11122");
         account.setPassword("pass");
-        account.setAccountName("박종훈");
+        account.setAccountName("테스터");
         account.setGender(Gender.MALE);
-        account.setEmail("m05214@naver.com");
+        account.setEmail("tester@naver.com");
         account.setPhone("010-1111-2222");
         accountService.save(account);
     }
