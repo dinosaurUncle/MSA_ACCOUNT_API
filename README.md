@@ -14,3 +14,6 @@ mysql:latest
 
 ### spring-boot
 실행시 동적으로 msa_account 테이블이 생성된다
+
+### swagger
+http://localhost:8089/swagger-ui.html
