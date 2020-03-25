@@ -1,4 +1,4 @@
-package me.dinosauruncle.msa.account.service;
+package me.dinosauruncle.msa.account.nonaopservice;
 
 import me.dinosauruncle.msa.account.domain.EventMessage;
 import org.aspectj.lang.JoinPoint;
