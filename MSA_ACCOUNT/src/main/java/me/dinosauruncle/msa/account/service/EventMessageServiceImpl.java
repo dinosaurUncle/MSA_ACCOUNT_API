@@ -40,10 +40,14 @@ public class EventMessageServiceImpl extends EventMessageService {
                 joinPoint.getSignature().getDeclaringType().getName(), joinPoint.getSignature().getName(), parameterMap));
         eventMessage.setAccountId(accountId);
         eventMessage.setDate(new Date());
-        try {
-            eventMessageRepository.save(eventMessage);
-        } catch (Exception e){
-            logger.error(e.getMessage());
+        if (StringUtils.isNotEmpty(eventMessage.getMessage())){
+            try {
+                eventMessageRepository.save(eventMessage);
+            } catch (Exception e){
+                logger.error(e.getMessage());
+                eventMessage = null;
+            }
+        } else {
             eventMessage = null;
         }
         return eventMessage;
@@ -62,9 +66,8 @@ public class EventMessageServiceImpl extends EventMessageService {
     @Override
     public String getEventMessageContent(String serviceType, String methodName, Map<String, Object> parameterMap) {
         String returnMessage = "";
-        String classprefix = "me.dinosauruncle.msa.account.service.";
-        serviceType = serviceType.substring(serviceType.indexOf(classprefix));
-            switch (serviceType){
+        String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
+            switch (subStringServiceType){
                 case  "AccountMappingRoleServiceImpl" :
                     break;
                 case  "AccountServiceImpl" :
@@ -85,6 +88,6 @@ public class EventMessageServiceImpl extends EventMessageService {
                     break;
 
             }
-        return null;
+        return returnMessage;
     }
 }
