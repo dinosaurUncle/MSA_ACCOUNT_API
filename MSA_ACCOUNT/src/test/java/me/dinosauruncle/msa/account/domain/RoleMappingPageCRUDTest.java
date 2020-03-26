@@ -1,6 +1,5 @@
 package me.dinosauruncle.msa.account.domain;
 
-import me.dinosauruncle.msa.account.repository.RoleMappingPageRepository;
 import me.dinosauruncle.msa.account.service.PageService;
 import me.dinosauruncle.msa.account.service.RoleMappingPageService;
 import me.dinosauruncle.msa.account.service.RoleService;

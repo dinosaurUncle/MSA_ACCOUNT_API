@@ -16,10 +16,10 @@ public class PageCRUDTest {
     @Test
     public void save(){
         Page page = new Page();
-        page.setPageName("News");
-        page.setPageUrl("/news");
-        page.setDescription("news page");
-        pageService.saveAndUpdate(page);
+        page.setPageName("Test");
+        page.setPageUrl("/test11111");
+        page.setDescription("testtesttest");
+        pageService.saveAndUpdateByAccountId(page, "accountId:m05214");
     }
 
     @Test
@@ -45,6 +45,6 @@ public class PageCRUDTest {
 
     @Test
     public void delete(){
-        pageService.delete(3L);
+        pageService.delete(5L);
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
 import java.util.Map;
 
 @Transactional
@@ -19,6 +18,18 @@ public class PageServiceImpl extends PageService {
 
     @Override
     public Map<String, Object> saveAndUpdate(Page page) {
+        parameterMap.put("page", page);
+        pageRepository.save(page);
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> saveAndUpdateByAccountId(Page page, String accountId) {
+        return saveAndUpdateProtected(page);
+    }
+
+
+    private Map<String, Object> saveAndUpdateProtected(Page page) {
         parameterMap.put("page", page);
         pageRepository.save(page);
         return parameterMap;
