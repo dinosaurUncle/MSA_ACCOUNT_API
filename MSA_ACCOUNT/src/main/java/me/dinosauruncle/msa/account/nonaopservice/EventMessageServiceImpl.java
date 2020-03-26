@@ -10,9 +10,10 @@ import org.aspectj.lang.JoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class EventMessageServiceImpl extends EventMessageService {
@@ -22,7 +23,7 @@ public class EventMessageServiceImpl extends EventMessageService {
     EventMessageRepository eventMessageRepository;
 
     @Override
-    public EventMessage save(JoinPoint joinPoint, Map<String, Object> parameterMap) {
+    public EventMessage aopSave(JoinPoint joinPoint, Map<String, Object> parameterMap) {
         String accountId = null;
         if (parameterMap.containsKey("accountId")){
             accountId = String.valueOf(parameterMap.get("accountId"));
@@ -34,10 +35,15 @@ public class EventMessageServiceImpl extends EventMessageService {
                 accountId ="";
             }
         }
+        return save(joinPoint.getSignature().getDeclaringType().getName(), joinPoint.getSignature().getName(), accountId);
+    }
+
+    @Override
+    public EventMessage save(String serviceType, String methodName, String accountId) {
         EventMessage eventMessage = new EventMessage();
         eventMessage.setCheck(false);
         eventMessage.setMessage(getEventMessageContent(
-                joinPoint.getSignature().getDeclaringType().getName(), joinPoint.getSignature().getName(), parameterMap));
+                serviceType, methodName, accountId));
         eventMessage.setAccountId(accountId);
         eventMessage.setDate(new Date());
         if (StringUtils.isNotEmpty(eventMessage.getMessage())){
@@ -53,18 +59,49 @@ public class EventMessageServiceImpl extends EventMessageService {
         return eventMessage;
     }
 
+
     @Override
-    public List<EventMessage> getEventMessageList(String accountId) {
-        return null;
+    public List<EventMessage> getEventMessageListFillterByDate(String accountId) {
+        List<String> tempDateStmpList = new ArrayList<String>();
+        List<EventMessage> eventMessages = new ArrayList<EventMessage>();
+        eventMessageRepository.selectByAccountId(accountId).stream().forEach(eventMessage -> {
+            LocalDateTime date = eventMessage.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            if (tempDateStmpList.size() == 0){
+                tempDateStmpList.add(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                eventMessages.add(eventMessage);
+            } else {
+                tempDateStmpList.forEach(tempDate -> {
+                    if (tempDate.equals(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                        eventMessage.setDate(null);
+                        eventMessages.add(eventMessage);
+                    }
+                    else{
+                        tempDateStmpList.add(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                        eventMessages.add(eventMessage);
+                    }
+                });
+            }
+        });
+
+        return eventMessages;
     }
 
     @Override
-    public void update(List<String> eventMessageList) {
-
+    public List<EventMessage> getEventMessageList() {
+        return eventMessageRepository.findAll();
     }
 
     @Override
-    public String getEventMessageContent(String serviceType, String methodName, Map<String, Object> parameterMap) {
+    public void isCheckChangeUpdate(List<String> eventMessageIdList) {
+        eventMessageIdList.stream().forEach(eventMessageId -> {
+            EventMessage eventMessage = eventMessageRepository.findById(Long.valueOf(eventMessageId)).get();
+            eventMessage.setCheck(true);
+            eventMessageRepository.save(eventMessage);
+        });
+    }
+
+    @Override
+    public String getEventMessageContent(String serviceType, String methodName, String accountId) {
         String returnMessage = "";
         String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
             switch (subStringServiceType){
@@ -73,10 +110,10 @@ public class EventMessageServiceImpl extends EventMessageService {
                 case  "AccountServiceImpl" :
                     switch (methodName) {
                         case "save" :
-                            returnMessage = "'" + ((Account)parameterMap.get("account")).getAccountId() + "'님 회원 가입되었습니다";
+                            returnMessage = "'" + accountId + "'님 회원 가입되었습니다";
                             break;
                         case "update" :
-                            returnMessage = "'" + ((Account)parameterMap.get("account")).getAccountId() + "'님의 계정정보가 수정되었습니다";
+                            returnMessage = "'" + accountId + "'님의 계정정보가 수정되었습니다";
                             break;
                     }
                     break;
@@ -89,5 +126,18 @@ public class EventMessageServiceImpl extends EventMessageService {
 
             }
         return returnMessage;
+    }
+
+    @Override
+    public int nonCheckedCount(String accountId) {
+        return eventMessageRepository.nonCheckedCount(accountId);
+    }
+
+    @Override
+    public Map<String, Object> getEventMessagesInfo(String accountId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("eventMessages", getEventMessageListFillterByDate(accountId));
+        result.put("count", nonCheckedCount(accountId));
+        return result;
     }
 }

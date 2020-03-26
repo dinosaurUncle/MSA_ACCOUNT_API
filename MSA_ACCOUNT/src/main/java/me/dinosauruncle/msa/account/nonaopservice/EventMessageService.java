@@ -10,8 +10,12 @@ import java.util.Map;
 @Service
 public abstract class EventMessageService {
 
-    public abstract EventMessage save(JoinPoint joinPoint, Map<String, Object> parameterMap);
-    public abstract List<EventMessage> getEventMessageList(String accountId);
-    public abstract void update(List<String> eventMessageList);
-    public abstract String getEventMessageContent(String serviceType, String methodName, Map<String, Object> parameterMap);
+    public abstract EventMessage aopSave(JoinPoint joinPoint, Map<String, Object> parameterMap);
+    public abstract EventMessage save(String serviceType, String methodName, String accountId);
+    public abstract List<EventMessage> getEventMessageListFillterByDate(String accountId);
+    public abstract List<EventMessage> getEventMessageList();
+    public abstract void isCheckChangeUpdate(List<String> eventMessageIdList);
+    public abstract String getEventMessageContent(String serviceType, String methodName, String accoutId);
+    public abstract int nonCheckedCount(String accountId);
+    public abstract Map<String, Object> getEventMessagesInfo(String accountId);
 }
