@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 
-@RestController(value = "/msa")
+@RestController()
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
@@ -21,52 +22,52 @@ public class AccountController {
     @Autowired
     private AccountMappingPageService accountMappingPageService;
 
-    @PostMapping("/account")
+    @PostMapping("")
     public Map<String, Object> save(@RequestBody Account account){
         return accountService.save(account);
     }
 
-    @PutMapping("/account")
+    @PutMapping("")
     public Map<String, Object> update(@RequestBody Account account){
         return accountService.update(account);
     }
-    @GetMapping("/account/{id}")
+    @GetMapping("/{id}")
     public Map<String, Object> getAccountById(@PathVariable("id") String id) {
         return accountService.getAccount(id);
     }
-    @GetMapping("/account")
+    @GetMapping("")
     public Map<String, Object> getAccounts(){
         return accountService.getAccounts();
     }
 
-    @GetMapping("/account/password/{email}")
+    @GetMapping("/password/{email}")
     public String createTokenAndSendEmail(@PathVariable("email") String email) {
         return null;
     }
 
 
-    @DeleteMapping("/account/{id}")
+    @DeleteMapping("/{id}")
     public Map<String, Object> deleteAccount(@PathVariable("id") String id){
         return accountService.deleteAccount(id);
     }
 
-    @GetMapping("account/isId/{id}")
+    @GetMapping("/isId/{id}")
     public Map<String, Object> isId(@PathVariable("id") String id) {
         return accountService.isId(id);
     }
 
-    @GetMapping("account/selectId/{name}/{email}")
+    @GetMapping("/selectId/{name}/{email}")
     public Map<String, Object> findNameAndEmailReturnId(
             @PathVariable("name") String name, @PathVariable("email") String email){
         return accountService.findNameAndEmailReturnId(name, email);
     }
 
-    @PostMapping("account/login")
+    @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Account account){
         return accountService.login(account);
     }
 
-    @GetMapping("account/page/{id}")
+    @GetMapping("/page/{id}")
     public Map<String, Object> getPages(@PathVariable("id") String id) {return accountMappingPageService.byAccountIdGetPages(id);}
 
 
