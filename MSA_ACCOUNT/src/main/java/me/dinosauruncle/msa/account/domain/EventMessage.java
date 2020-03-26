@@ -14,7 +14,11 @@ public class EventMessage {
 
     private String accountId;
 
-    private String message;
+    private String eventMessageType;
+
+    private String eventMessageTitle;
+
+    private String eventMessageDescription;
 
     private boolean isCheck;
 
@@ -28,12 +32,28 @@ public class EventMessage {
         this.accountId = accountId;
     }
 
-    public String getMessage() {
-        return message;
+    public String getEventMessageType() {
+        return eventMessageType;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setEventMessageType(String eventMessageType) {
+        this.eventMessageType = eventMessageType;
+    }
+
+    public String getEventMessageTitle() {
+        return eventMessageTitle;
+    }
+
+    public void setEventMessageTitle(String eventMessageTitle) {
+        this.eventMessageTitle = eventMessageTitle;
+    }
+
+    public String getEventMessageDescription() {
+        return eventMessageDescription;
+    }
+
+    public void setEventMessageDescription(String eventMessageDescription) {
+        this.eventMessageDescription = eventMessageDescription;
     }
 
     public boolean isCheck() {
@@ -57,7 +77,9 @@ public class EventMessage {
         return "EventMessage{" +
                 "eventMessageId=" + eventMessageId +
                 ", accountId='" + accountId + '\'' +
-                ", message='" + message + '\'' +
+                ", eventMessageType='" + eventMessageType + '\'' +
+                ", eventMessageTitle='" + eventMessageTitle + '\'' +
+                ", eventMessageDescription='" + eventMessageDescription + '\'' +
                 ", isCheck=" + isCheck +
                 ", date=" + date +
                 '}';

@@ -42,11 +42,11 @@ public class EventMessageServiceImpl extends EventMessageService {
     public EventMessage save(String serviceType, String methodName, String accountId) {
         EventMessage eventMessage = new EventMessage();
         eventMessage.setCheck(false);
-        eventMessage.setMessage(getEventMessageContent(
+        eventMessage.setEventMessageDescription(getEventMessageContent(
                 serviceType, methodName, accountId));
         eventMessage.setAccountId(accountId);
         eventMessage.setDate(new Date());
-        if (StringUtils.isNotEmpty(eventMessage.getMessage())){
+        if (StringUtils.isNotEmpty(eventMessage.getEventMessageDescription())){
             try {
                 eventMessageRepository.save(eventMessage);
             } catch (Exception e){
@@ -139,5 +139,37 @@ public class EventMessageServiceImpl extends EventMessageService {
         result.put("eventMessages", getEventMessageListFillterByDate(accountId));
         result.put("count", nonCheckedCount(accountId));
         return result;
+    }
+
+    private List<String> eventMessageLogicalPartitionResult(String serviceType,
+                                                            String methodName, String accountId){
+        List<String> resultList = new ArrayList<String>();
+        String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
+        switch (subStringServiceType){
+            case  "AccountMappingRoleServiceImpl" :
+                resultList.add("권한지정");
+                break;
+            case  "AccountServiceImpl" :
+                resultList.add("account");
+                switch (methodName) {
+                    case "save" :
+                        resultList.add("회원가입");
+                        resultList.add("'" + accountId + "'님 회원 가입되었습니다");
+                        break;
+                    case "update" :
+                        resultList.add("계정정보수정");
+                        resultList.add("'" + accountId + "'님 회원 가입되었습니다");
+                        break;
+                }
+                break;
+            case  "PageServiceImpl" :
+                break;
+            case  "RoleMappingPageServiceImpl" :
+                break;
+            case  "RoleServiceImpl" :
+                break;
+
+        }
+        return resultList;
     }
 }
