@@ -5,6 +5,7 @@ import me.dinosauruncle.msa.account.repository.AccountMappingRoleRepository;
 import me.dinosauruncle.msa.account.repository.EventMessageRepository;
 import me.dinosauruncle.msa.account.repository.PageRepository;
 import me.dinosauruncle.msa.account.repository.RoleRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -54,6 +55,8 @@ public class EventMessageServiceImpl extends EventMessageService {
     public List<EventMessage> save(String serviceType, String methodName, Map<String, Object> parameterMap) {
 
         List<String> resultFieldList = eventMessageLogicalPartitionResult(serviceType, methodName, parameterMap);
+        if (resultFieldList.size() == 0) return null;
+
         String resultServiceType = resultFieldList.get(0);
         List<EventMessage> returnEventMessages = new ArrayList<EventMessage>();
         switch (resultServiceType) {
@@ -185,6 +188,7 @@ public class EventMessageServiceImpl extends EventMessageService {
         Role role = null;
         switch (subStringServiceType){
             case  "AccountMappingRoleServiceImpl" :
+                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
                 resultList.add("account&role");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
@@ -214,6 +218,7 @@ public class EventMessageServiceImpl extends EventMessageService {
                 }
                 break;
             case  "PageServiceImpl" :
+                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "pageName"))) break;
                 resultList.add("page");
                 switch (methodName) {
                     case "save" :
@@ -231,6 +236,9 @@ public class EventMessageServiceImpl extends EventMessageService {
                 }
                 break;
             case  "RoleMappingPageServiceImpl" :
+                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "pageName"))
+                || StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
+
                 resultList.add("role&page");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
@@ -249,6 +257,7 @@ public class EventMessageServiceImpl extends EventMessageService {
                 }
                 break;
             case  "RoleServiceImpl" :
+                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
                 resultList.add("role");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
