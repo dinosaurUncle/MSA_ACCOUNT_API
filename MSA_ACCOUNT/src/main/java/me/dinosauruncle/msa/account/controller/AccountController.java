@@ -16,8 +16,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private AccountMappingPageService accountMappingPageService;
+
 
     @PostMapping("")
     public Map<String, Object> save(@RequestBody Account account){
@@ -63,9 +62,6 @@ public class AccountController {
     public Map<String, Object> login(@RequestBody Account account){
         return accountService.login(account);
     }
-
-    @GetMapping("/page/{id}")
-    public Map<String, Object> getPages(@PathVariable("id") String id) {return accountMappingPageService.byAccountIdGetPages(id);}
 
 
 
