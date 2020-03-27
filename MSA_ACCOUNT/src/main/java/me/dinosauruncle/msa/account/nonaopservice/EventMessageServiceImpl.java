@@ -132,12 +132,17 @@ public class EventMessageServiceImpl extends EventMessageService {
     }
 
     @Override
-    public void isCheckChangeUpdate(List<String> eventMessageIdList) {
-        eventMessageIdList.stream().forEach(eventMessageId -> {
-            EventMessage eventMessage = eventMessageRepository.findById(Long.valueOf(eventMessageId)).get();
-            eventMessage.setCheck(true);
-            eventMessageRepository.save(eventMessage);
+    public void isCheckChangeUpdate(List<Long> eventMessageIdList) {
+        eventMessageIdList.forEach(eventMessageId -> {
+            isCheckChangeUpdate(eventMessageId);
         });
+    }
+
+    @Override
+    public void isCheckChangeUpdate(Long eventMessageId) {
+        EventMessage eventMessage = eventMessageRepository.findById(Long.valueOf(eventMessageId)).get();
+        eventMessage.setCheck(true);
+        eventMessageRepository.save(eventMessage);
     }
 
     @Override

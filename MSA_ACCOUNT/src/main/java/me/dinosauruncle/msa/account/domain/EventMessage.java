@@ -24,6 +24,10 @@ public class EventMessage {
 
     private Date date;
 
+    public Long getEventMessageId() {
+        return eventMessageId;
+    }
+
     public String getAccountId() {
         return accountId;
     }
