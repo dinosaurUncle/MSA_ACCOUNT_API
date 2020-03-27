@@ -19,7 +19,7 @@ public class RoleMappingPageServiceImpl extends RoleMappingPageService {
     RoleMappingPageRepository roleMappingPageRepository;
 
     @Override
-    public Map<String, Object> save(RoleMappingPage roleMappingPage) {
+    public Map<String, Object> save(RoleMappingPage roleMappingPage, String... args) {
 
         if (validationIsExistCheck(roleMappingPage.getRole().getRoleId(), roleMappingPage.getPage().getPageId())){
             String errorMessage = "roleId, pageId 값 중복입니다";
@@ -38,7 +38,7 @@ public class RoleMappingPageServiceImpl extends RoleMappingPageService {
     }
 
     @Override
-    public Map<String, Object> delete(Long id) {
+    public Map<String, Object> delete(Long id, String... args) {
         RoleMappingPage roleMappingPage = roleMappingPageRepository.findById(id).get();
         parameterMap.put("roleMappingPage", roleMappingPage);
         roleMappingPageRepository.delete(roleMappingPage);
@@ -46,8 +46,13 @@ public class RoleMappingPageServiceImpl extends RoleMappingPageService {
     }
 
     @Override
+    public RoleMappingPage selectByRoleIdAndPageId(String roleId, Long pageId) {
+        return roleMappingPageRepository.selectByRoleIdAndPageId(roleId, pageId);
+    }
+
+    @Override
     public boolean validationIsExistCheck(String roleId, Long pageId) {
-        return roleMappingPageRepository.validataionCheck(roleId, pageId).size() > 0;
+        return roleMappingPageRepository.selectByRoleIdAndPageId(roleId, pageId) != null;
     }
 
 }

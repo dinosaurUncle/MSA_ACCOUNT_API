@@ -25,15 +25,24 @@ public class ServiceAOP {
     @Before("execution(* me.dinosauruncle.msa.account.service.*.*(..))")
     public Object parameterMapClean(JoinPoint joinPoint) throws Throwable{
         List<Object> argsList =  Arrays.asList(joinPoint.getArgs());
-        List<String> accountList = new ArrayList<>();
+        Map<String, String> argsMap = new HashMap<String, String>();
         if (!argsList.isEmpty()) {
-            argsList.stream().forEach(object -> {
-                if (object instanceof String){
-                    String string = String.valueOf(object);
-                    if (string.indexOf("accountId:") != -1){
-                        accountList.add(string.substring("accountId:".length()));
+            argsList.forEach(arg ->{
+                if (arg instanceof String[]){
+                    String[] stringArray = (String[]) arg;
+                    for (String string : stringArray){
+                        if (string.indexOf("accountId:") != -1){
+                            argsMap.put("accountId",string.substring("accountId:".length()));
+                        } else if (string.indexOf("roleId:") != -1) {
+                            argsMap.put("roleId",string.substring("roleId:".length()));
+                        } else if (string.indexOf("targetAccountId:") != -1) {
+                            argsMap.put("targetAccountId",string.substring("targetAccountId:".length()));
+                        } else if (string.indexOf("pageName:") != -1) {
+                            argsMap.put("pageName",string.substring("pageName:".length()));
+                        }
                     }
                 }
+
             });
         }
 
@@ -45,10 +54,14 @@ public class ServiceAOP {
         Map<String, Object> map = null;
         if (retVal.getParameterMap() != null){
             map = retVal.getParameterMap();
+            map.clear();
         } else {
             map = new HashMap<String, Object>();
         }
-        if (!accountList.isEmpty()) map.put("accountId", accountList.get(0));
+        if (argsMap.containsKey("accountId")) map.put("accountId", argsMap.get("accountId"));
+        if (argsMap.containsKey("targetAccountId")) map.put("targetAccountId", argsMap.get("targetAccountId"));
+        if (argsMap.containsKey("roleId")) map.put("roleId", argsMap.get("roleId"));
+        if (argsMap.containsKey("pageName")) map.put("pageName", argsMap.get("pageName"));
         retVal.setParameterMap(map);
         return retVal;
     }

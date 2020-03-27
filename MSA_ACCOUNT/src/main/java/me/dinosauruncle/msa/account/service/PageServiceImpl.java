@@ -16,23 +16,21 @@ public class PageServiceImpl extends PageService {
     @Autowired
     private PageRepository pageRepository;
 
-    @Override
-    public Map<String, Object> saveAndUpdate(Page page) {
+
+    public Map<String, Object> saveAndUpdate(Page page, String... args) {
         parameterMap.put("page", page);
         pageRepository.save(page);
         return parameterMap;
     }
 
     @Override
-    public Map<String, Object> saveAndUpdateByAccountId(Page page, String accountId) {
-        return saveAndUpdateProtected(page);
+    public Map<String, Object> save(Page page, String... args) {
+        return saveAndUpdate(page, args);
     }
 
-
-    private Map<String, Object> saveAndUpdateProtected(Page page) {
-        parameterMap.put("page", page);
-        pageRepository.save(page);
-        return parameterMap;
+    @Override
+    public Map<String, Object> update(Page page, String... args) {
+        return saveAndUpdate(page, args);
     }
 
     @Override
@@ -48,8 +46,9 @@ public class PageServiceImpl extends PageService {
     }
 
     @Override
-    public Map<String, Object> delete(Long pageId) {
+    public Map<String, Object> delete(Long pageId, String... args) {
         Page page = pageRepository.findById(pageId).get();
+        parameterMap.put("pageName", page.getPageName());
         parameterMap.put("deletePage", page);
         pageRepository.delete(page);
         return parameterMap;

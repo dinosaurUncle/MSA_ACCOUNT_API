@@ -1,5 +1,6 @@
 package me.dinosauruncle.msa.account.domain;
 
+import me.dinosauruncle.msa.account.nonaopservice.CommonService;
 import me.dinosauruncle.msa.account.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class BasicDataSetting {
 
     @Autowired
     RoleMappingPageService roleMappingPageService;
+
+    @Autowired
+    CommonService commonService;
 
     @Test
     public void dataSetting1(){
@@ -46,65 +50,89 @@ public class BasicDataSetting {
         Role role = new Role();
         role.setRoleId("initiator");
         role.setRoleName("가입자");
-        roleService.save(role);
+        roleService.save(role,
+                commonService.SerializationKeyAndValue(1, account.getAccountId()),
+                commonService.SerializationKeyAndValue(3, "initiator"));
 
         Role admin = new Role();
         admin.setRoleId("admin");
         admin.setRoleName("관리자");
-        roleService.save(admin);
+        roleService.save(admin,
+                commonService.SerializationKeyAndValue(1, account.getAccountId()),
+                commonService.SerializationKeyAndValue(3, "admin"));
 
         Page page = new Page();
         page.setPageName("Home");
         page.setPageUrl("/");
         page.setDescription("initiation page");
-        pageService.saveAndUpdate(page);
+        pageService.save(page,
+                commonService.SerializationKeyAndValue(1, account.getAccountId()),
+                commonService.SerializationKeyAndValue(4, "Home"));
 
         Page newsPage = new Page();
         newsPage.setPageName("News");
         newsPage.setPageUrl("/news");
         newsPage.setDescription("news page");
-        pageService.saveAndUpdate(newsPage);
+        pageService.save(newsPage,
+                commonService.SerializationKeyAndValue(1, account.getAccountId()),
+                commonService.SerializationKeyAndValue(4, "News"));
 
         Page adminPage = new Page();
         adminPage.setPageName("Admin");
         adminPage.setPageUrl("/admin");
         adminPage.setDescription("admin page");
-        pageService.saveAndUpdate(adminPage);
+        pageService.save(adminPage,
+                commonService.SerializationKeyAndValue(1, account.getAccountId()),
+                commonService.SerializationKeyAndValue(4, "Admin"));
 
         AccountMappingRole accountMappingRole = new AccountMappingRole();
         accountMappingRole.setAccount(account);
         accountMappingRole.setRole(role);
-        accountMappingRoleService.save(accountMappingRole);
+        accountMappingRoleService.save(accountMappingRole,
+                commonService.SerializationKeyAndValue(2, account.getAccountId()),
+                commonService.SerializationKeyAndValue(3, role.getRoleId()));
 
         AccountMappingRole accountMappingRole2 = new AccountMappingRole();
         accountMappingRole2.setAccount(account2);
         accountMappingRole2.setRole(role);
-        accountMappingRoleService.save(accountMappingRole2);
+        accountMappingRoleService.save(accountMappingRole2,
+                commonService.SerializationKeyAndValue(2, account2.getAccountId()),
+                commonService.SerializationKeyAndValue(3, role.getRoleId()));
 
         AccountMappingRole accountMappingRole3 = new AccountMappingRole();
         accountMappingRole3.setAccount(account);
         accountMappingRole3.setRole(admin);
-        accountMappingRoleService.save(accountMappingRole3);
+        accountMappingRoleService.save(accountMappingRole3,
+                commonService.SerializationKeyAndValue(2, account.getAccountId()),
+                commonService.SerializationKeyAndValue(3, admin.getRoleId()));
 
         RoleMappingPage roleMappingPage = new RoleMappingPage();
         roleMappingPage.setRole(role);
         roleMappingPage.setPage(page);
-        roleMappingPageService.save(roleMappingPage);
+        roleMappingPageService.save(roleMappingPage,
+                commonService.SerializationKeyAndValue(3, role.getRoleId()),
+                commonService.SerializationKeyAndValue(4, page.getPageName()));
 
         RoleMappingPage roleMappingPage2 = new RoleMappingPage();
         roleMappingPage2.setRole(role);
         roleMappingPage2.setPage(newsPage);
-        roleMappingPageService.save(roleMappingPage2);
+        roleMappingPageService.save(roleMappingPage2,
+                commonService.SerializationKeyAndValue(3, role.getRoleId()),
+                commonService.SerializationKeyAndValue(4, newsPage.getPageName()));
 
         RoleMappingPage roleMappingPage3 = new RoleMappingPage();
         roleMappingPage3.setRole(admin);
         roleMappingPage3.setPage(page);
-        roleMappingPageService.save(roleMappingPage3);
+        roleMappingPageService.save(roleMappingPage3,
+                commonService.SerializationKeyAndValue(3, admin.getRoleId()),
+                commonService.SerializationKeyAndValue(4, page.getPageName()));
 
         RoleMappingPage roleMappingPage4 = new RoleMappingPage();
         roleMappingPage4.setRole(admin);
         roleMappingPage4.setPage(adminPage);
-        roleMappingPageService.save(roleMappingPage4);
+        roleMappingPageService.save(roleMappingPage4,
+                commonService.SerializationKeyAndValue(3, admin.getRoleId()),
+                commonService.SerializationKeyAndValue(4, adminPage.getPageName()));
     }
 
     @Test

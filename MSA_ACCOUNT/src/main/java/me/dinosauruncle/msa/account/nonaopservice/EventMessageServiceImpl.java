@@ -1,9 +1,10 @@
 package me.dinosauruncle.msa.account.nonaopservice;
 
-import me.dinosauruncle.msa.account.domain.Account;
-import me.dinosauruncle.msa.account.domain.EventMessage;
+import me.dinosauruncle.msa.account.domain.*;
+import me.dinosauruncle.msa.account.repository.AccountMappingRoleRepository;
 import me.dinosauruncle.msa.account.repository.EventMessageRepository;
-import org.apache.commons.lang3.StringUtils;
+import me.dinosauruncle.msa.account.repository.PageRepository;
+import me.dinosauruncle.msa.account.repository.RoleRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -22,8 +23,17 @@ public class EventMessageServiceImpl extends EventMessageService {
     @Autowired
     EventMessageRepository eventMessageRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PageRepository pageRepository;
+
+    @Autowired
+    AccountMappingRoleRepository accountMappingRoleRepository;
+
     @Override
-    public EventMessage aopSave(JoinPoint joinPoint, Map<String, Object> parameterMap) {
+    public List<EventMessage> aopSave(JoinPoint joinPoint, Map<String, Object> parameterMap) {
         String accountId = null;
         if (parameterMap.containsKey("accountId")){
             accountId = String.valueOf(parameterMap.get("accountId"));
@@ -31,32 +41,59 @@ public class EventMessageServiceImpl extends EventMessageService {
             if (parameterMap.containsKey("account")){
                 Account account = (Account)parameterMap.get("account");
                 accountId = account.getAccountId();
+                parameterMap.put("accountId", accountId);
             } else {
                 accountId ="";
+                parameterMap.put("accountId", accountId);
             }
         }
-        return save(joinPoint.getSignature().getDeclaringType().getName(), joinPoint.getSignature().getName(), accountId);
+        return save(joinPoint.getSignature().getDeclaringType().getName(), joinPoint.getSignature().getName(), parameterMap);
     }
 
     @Override
-    public EventMessage save(String serviceType, String methodName, String accountId) {
-        EventMessage eventMessage = new EventMessage();
-        eventMessage.setCheck(false);
-        eventMessage.setEventMessageDescription(getEventMessageContent(
-                serviceType, methodName, accountId));
-        eventMessage.setAccountId(accountId);
-        eventMessage.setDate(new Date());
-        if (StringUtils.isNotEmpty(eventMessage.getEventMessageDescription())){
-            try {
-                eventMessageRepository.save(eventMessage);
-            } catch (Exception e){
-                logger.error(e.getMessage());
-                eventMessage = null;
-            }
+    public List<EventMessage> save(String serviceType, String methodName, Map<String, Object> parameterMap) {
+
+        List<String> resultFieldList = eventMessageLogicalPartitionResult(serviceType, methodName, parameterMap);
+        String resultServiceType = resultFieldList.get(0);
+        List<EventMessage> returnEventMessages = new ArrayList<EventMessage>();
+        switch (resultServiceType) {
+            case "account&role" :
+                returnEventMessages.add(eachSave(resultFieldList, getParameterMapValue(parameterMap, "targetAccountId")));
+                break;
+            case "role&page" :
+                //getParameterMapValue(parameterMap, "roleId")
+                List<AccountMappingRole> accountMappingRoles =
+                        accountMappingRoleRepository.selectByRoleId(getParameterMapValue(parameterMap, "roleId"));
+                accountMappingRoles.stream().forEach(accountMappingRole -> {
+                    returnEventMessages.add(eachSave(resultFieldList, accountMappingRole.getAccount().getAccountId()));
+                });
+                break;
+            default:
+                returnEventMessages.add(eachSave(resultFieldList, getParameterMapValue(parameterMap, "accountId")));
+                break;
+
+        }
+        return returnEventMessages;
+
+    }
+
+    private EventMessage eachSave(List<String> resultFieldList, String accountId){
+        EventMessage eventMessage = null;
+        if (resultFieldList.size() == 3) {
+            eventMessage = new EventMessage();
+            eventMessage.setCheck(false);
+            eventMessage.setAccountId(accountId);
+            eventMessage.setEventMessageType(resultFieldList.get(0));
+            eventMessage.setEventMessageTitle(resultFieldList.get(1));
+            eventMessage.setEventMessageDescription(resultFieldList.get(2));
+            eventMessage.setDate(new Date());
+            eventMessageRepository.save(eventMessage);
         } else {
-            eventMessage = null;
+            logger.error("resultFieldList: " + resultFieldList);
+            logger.error("resultFieldList 안에 3개의 결과값이 존재해야 합니다 ");
         }
         return eventMessage;
+
     }
 
 
@@ -142,34 +179,99 @@ public class EventMessageServiceImpl extends EventMessageService {
     }
 
     private List<String> eventMessageLogicalPartitionResult(String serviceType,
-                                                            String methodName, String accountId){
+                                                            String methodName, Map<String, Object> parameterMap){
         List<String> resultList = new ArrayList<String>();
         String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
+        Role role = null;
         switch (subStringServiceType){
             case  "AccountMappingRoleServiceImpl" :
-                resultList.add("권한지정");
+                resultList.add("account&role");
+                role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
+                switch (methodName) {
+                    case "save" :
+                        resultList.add("권한부여");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님에게 권한 ["
+                        + role.getRoleName() + "]가 부여 되었습니다");
+                        break;
+                    case  "delete" :
+                        resultList.add("권한삭제");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님의 권한 ["
+                                + role.getRoleName() + "]가 삭제 되었습니다");
+                        break;
+                }
                 break;
             case  "AccountServiceImpl" :
                 resultList.add("account");
                 switch (methodName) {
                     case "save" :
                         resultList.add("회원가입");
-                        resultList.add("'" + accountId + "'님 회원 가입되었습니다");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "accountId") + "'님 회원 가입되었습니다");
                         break;
                     case "update" :
                         resultList.add("계정정보수정");
-                        resultList.add("'" + accountId + "'님 회원 가입되었습니다");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "accountId") + "'님의 계정정보가 수정되었습니다");
                         break;
                 }
                 break;
             case  "PageServiceImpl" :
+                resultList.add("page");
+                switch (methodName) {
+                    case "save" :
+                        resultList.add("페이지생성");
+                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 생성 되었습니다");
+                        break;
+                    case "update" :
+                        resultList.add("페이지수정");
+                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 수정 되었습니다");
+                        break;
+                    case "delete" :
+                        resultList.add("페이지삭제");
+                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 삭제 되었습니다");
+                        break;
+                }
                 break;
             case  "RoleMappingPageServiceImpl" :
+                resultList.add("role&page");
+                role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
+                switch (methodName) {
+                    case "save" :
+                        resultList.add("권한-페이지 연동");
+                        resultList.add("권한[" + role.getRoleName() + "]와 페이지 [" + getParameterMapValue(parameterMap, "pageName")
+                                + "] 가 연동 되었습니다");
+                        break;
+
+                    case "delete" :
+                        resultList.add("권한-페이지 연동해제");
+                        resultList.add("권한[" + role.getRoleName() + "]와 페이지 [" + getParameterMapValue(parameterMap, "pageName")
+                                + "] 가 연동 되었습니다");
+                        break;
+
+                }
                 break;
             case  "RoleServiceImpl" :
+                resultList.add("role");
+                role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
+                switch (methodName) {
+                    case "save" :
+                        resultList.add("권한생성");
+                        resultList.add(" 권한 [" + role.getRoleName() + "]가 생성 되었습니다");
+                        break;
+                    case "update" :
+                        resultList.add("권한수정");
+                        resultList.add(" 권한 [" + role.getRoleName() + "]가 수정 되었습니다");
+                        break;
+                    case "delete" :
+                        resultList.add("권한삭");
+                        resultList.add(" 권한 [" + role.getRoleName() + "]가 삭제 되었습니다");
+                        break;
+                }
                 break;
 
         }
         return resultList;
+    }
+
+    private String getParameterMapValue(Map<String, Object> parameterMap, String key){
+        return String.valueOf(parameterMap.get(key));
     }
 }

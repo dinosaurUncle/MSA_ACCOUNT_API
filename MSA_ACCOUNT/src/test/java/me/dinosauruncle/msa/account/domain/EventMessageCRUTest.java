@@ -19,11 +19,7 @@ public class EventMessageCRUTest {
 
     @Test
     public void save(){
-        String accountId = "m05214";
-        String serviceType = "me.dinosauruncle.msa.account.service.AccountServiceImpl";
-        String methodName = "update";
-        EventMessage eventMessage = eventMessageService.save(serviceType, methodName, accountId);
-        logger.info(eventMessage);
+
     }
 
     @Test

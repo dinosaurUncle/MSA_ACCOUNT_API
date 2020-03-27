@@ -19,7 +19,7 @@ public class PageCRUDTest {
         page.setPageName("Test");
         page.setPageUrl("/test11111");
         page.setDescription("testtesttest");
-        pageService.saveAndUpdateByAccountId(page, "accountId:m05214");
+        pageService.save(page, "accountId:m05214");
     }
 
     @Test
@@ -29,7 +29,7 @@ public class PageCRUDTest {
         page.setPageName("Home");
         page.setPageUrl("/");
         page.setDescription("모든 계정에 보이는 페이지 입니다");
-        pageService.saveAndUpdate(page);
+        pageService.update(page);
     }
 
 

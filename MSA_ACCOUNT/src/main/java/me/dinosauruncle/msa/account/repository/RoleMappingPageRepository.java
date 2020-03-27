@@ -15,5 +15,5 @@ public interface RoleMappingPageRepository extends JpaRepository<RoleMappingPage
 
     @Query(value = "SELECT rmp.* FROM role_mapping_page rmp  WHERE rmp.role_id = :roleId AND rmp.page_id =:pageId"
             , nativeQuery = true)
-    List<RoleMappingPage> validataionCheck(@Param("roleId") String roleId, @Param("pageId") Long PageId);
+    RoleMappingPage selectByRoleIdAndPageId(@Param("roleId") String roleId, @Param("pageId") Long PageId);
 }

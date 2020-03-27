@@ -14,10 +14,28 @@ public class RoleServiceImpl extends RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Override
-    public Map<String, Object> save(Role role) {
+
+    public Map<String, Object> saveAndUpdate(Role role) {
         parameterMap.put("role", role);
         roleRepository.save(role);
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> save(Role role, String... args) {
+        return saveAndUpdate(role);
+    }
+
+    @Override
+    public Map<String, Object> update(Role role, String... args) {
+        return saveAndUpdate(role);
+    }
+
+    @Override
+    public Map<String, Object> delete(String roleId, String... args) {
+        Role role = roleRepository.findById(roleId).get();
+        parameterMap.put("role", role);
+        roleRepository.delete(role);
         return parameterMap;
     }
 
