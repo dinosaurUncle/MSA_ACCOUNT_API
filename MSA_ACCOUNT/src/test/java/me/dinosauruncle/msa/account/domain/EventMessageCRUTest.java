@@ -24,9 +24,9 @@ public class EventMessageCRUTest {
 
     @Test
     public void isCheckChangeUpdate(){
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
+        List<Long> list = new ArrayList<>();
+        list.add(1L);
+        list.add(2L);
         eventMessageService.isCheckChangeUpdate(list);
     }
 

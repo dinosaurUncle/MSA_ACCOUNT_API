@@ -193,19 +193,19 @@ public class EventMessageServiceImpl extends EventMessageService {
         Role role = null;
         switch (subStringServiceType){
             case  "AccountMappingRoleServiceImpl" :
-                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
+                if (StringUtils.isEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
                 resultList.add("account&role");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
                     case "save" :
                         resultList.add("권한부여");
-                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님에게 권한 ["
-                        + role.getRoleName() + "]가 부여 되었습니다");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님에게 ["
+                        + role.getRoleName() + "] 권한이 부여 되었습니다");
                         break;
                     case  "delete" :
                         resultList.add("권한삭제");
-                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님의 권한 ["
-                                + role.getRoleName() + "]가 삭제 되었습니다");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "targetAccountId") + "'님의 ["
+                                + role.getRoleName() + "] 권한이 삭제 되었습니다");
                         break;
                 }
                 break;
@@ -223,60 +223,60 @@ public class EventMessageServiceImpl extends EventMessageService {
                 }
                 break;
             case  "PageServiceImpl" :
-                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "pageName"))) break;
+                if (StringUtils.isEmpty(getParameterMapValue(parameterMap, "pageName"))) break;
                 resultList.add("page");
                 switch (methodName) {
                     case "save" :
                         resultList.add("페이지생성");
-                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 생성 되었습니다");
+                        resultList.add("[" + getParameterMapValue(parameterMap, "pageName") + "] 페이지가 생성 되었습니다");
                         break;
                     case "update" :
                         resultList.add("페이지수정");
-                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 수정 되었습니다");
+                        resultList.add("[" + getParameterMapValue(parameterMap, "pageName") + "] 페이지가 수정 되었습니다");
                         break;
                     case "delete" :
                         resultList.add("페이지삭제");
-                        resultList.add("페이지 [" + getParameterMapValue(parameterMap, "pageName") + "] 가 삭제 되었습니다");
+                        resultList.add("[" + getParameterMapValue(parameterMap, "pageName") + "] 페이지가 삭제 되었습니다");
                         break;
                 }
                 break;
             case  "RoleMappingPageServiceImpl" :
-                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "pageName"))
-                || StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
+                if (StringUtils.isEmpty(getParameterMapValue(parameterMap, "pageName"))
+                || StringUtils.isEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
 
                 resultList.add("role&page");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
                     case "save" :
                         resultList.add("권한-페이지 연동");
-                        resultList.add("권한[" + role.getRoleName() + "]와 페이지 [" + getParameterMapValue(parameterMap, "pageName")
-                                + "] 가 연동 되었습니다");
+                        resultList.add("[" + role.getRoleName() + "] 권한과 [" + getParameterMapValue(parameterMap, "pageName")
+                                + "] 페이지 가 연동 되었습니다");
                         break;
 
                     case "delete" :
                         resultList.add("권한-페이지 연동해제");
-                        resultList.add("권한[" + role.getRoleName() + "]와 페이지 [" + getParameterMapValue(parameterMap, "pageName")
-                                + "] 가 연동 되었습니다");
+                        resultList.add("[" + role.getRoleName() + "] 권한과 [" + getParameterMapValue(parameterMap, "pageName")
+                                + "] 페이지 가 연동 되었습니다");
                         break;
 
                 }
                 break;
             case  "RoleServiceImpl" :
-                if (StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
+                if (StringUtils.isEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
                 resultList.add("role");
                 role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
                     case "save" :
                         resultList.add("권한생성");
-                        resultList.add(" 권한 [" + role.getRoleName() + "]가 생성 되었습니다");
+                        resultList.add(" [" + role.getRoleName() + "] 권한이 생성 되었습니다");
                         break;
                     case "update" :
                         resultList.add("권한수정");
-                        resultList.add(" 권한 [" + role.getRoleName() + "]가 수정 되었습니다");
+                        resultList.add(" [" + role.getRoleName() + "] 권한이 수정 되었습니다");
                         break;
                     case "delete" :
-                        resultList.add("권한삭");
-                        resultList.add(" 권한 [" + role.getRoleName() + "]가 삭제 되었습니다");
+                        resultList.add("권한삭제");
+                        resultList.add(" [" + role.getRoleName() + "] 권한이 삭제 되었습니다");
                         break;
                 }
                 break;
@@ -286,6 +286,6 @@ public class EventMessageServiceImpl extends EventMessageService {
     }
 
     private String getParameterMapValue(Map<String, Object> parameterMap, String key){
-        return String.valueOf(parameterMap.get(key));
+        return String.valueOf(parameterMap.get(key)) == "null"? null : String.valueOf(parameterMap.get(key));
     }
 }

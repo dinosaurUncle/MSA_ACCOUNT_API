@@ -21,9 +21,9 @@ public class EventMessageController {
     }
 
     @PutMapping("")
-    public String chackChange(@RequestBody EventMessage eventMessage){
+    public Map<String, Object> chackChange(@RequestBody EventMessage eventMessage){
         eventMessageService.isCheckChangeUpdate(eventMessage.getEventMessageId());
-        return "success";
+        return eventMessageService.getEventMessagesInfo(eventMessage.getAccountId());
     }
 
 }
