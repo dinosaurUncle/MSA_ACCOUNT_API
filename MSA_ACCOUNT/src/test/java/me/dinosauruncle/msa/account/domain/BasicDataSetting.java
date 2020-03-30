@@ -88,16 +88,12 @@ public class BasicDataSetting {
         AccountMappingRole accountMappingRole = new AccountMappingRole();
         accountMappingRole.setAccount(account);
         accountMappingRole.setRole(role);
-        accountMappingRoleService.save(accountMappingRole,
-                commonService.SerializationKeyAndValue(2, account.getAccountId()),
-                commonService.SerializationKeyAndValue(3, role.getRoleId()));
+        accountMappingRoleService.save(accountMappingRole);
 
         AccountMappingRole accountMappingRole2 = new AccountMappingRole();
         accountMappingRole2.setAccount(account2);
         accountMappingRole2.setRole(role);
-        accountMappingRoleService.save(accountMappingRole2,
-                commonService.SerializationKeyAndValue(2, account2.getAccountId()),
-                commonService.SerializationKeyAndValue(3, role.getRoleId()));
+        accountMappingRoleService.save(accountMappingRole2);
 
         AccountMappingRole accountMappingRole3 = new AccountMappingRole();
         accountMappingRole3.setAccount(account);

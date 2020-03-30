@@ -71,6 +71,16 @@ public class EventMessageServiceImpl extends EventMessageService {
                     returnEventMessages.add(eachSave(resultFieldList, accountMappingRole.getAccount().getAccountId()));
                 });
                 break;
+            case "account" :
+                if (resultFieldList.size() == 3){
+                    if (!resultFieldList.get(1).equals("delete"))
+                        returnEventMessages.add(eachSave(resultFieldList, getParameterMapValue(parameterMap, "accountId")));
+
+                    if(StringUtils.isNotEmpty(getParameterMapValue(parameterMap, "targetAccountId")))
+                        returnEventMessages.add(eachSave(resultFieldList, getParameterMapValue(parameterMap, "targetAccountId")));
+
+                }
+                break;
             default:
                 returnEventMessages.add(eachSave(resultFieldList, getParameterMapValue(parameterMap, "accountId")));
                 break;
@@ -219,6 +229,10 @@ public class EventMessageServiceImpl extends EventMessageService {
                     case "update" :
                         resultList.add("계정정보수정");
                         resultList.add("'" + getParameterMapValue(parameterMap, "accountId") + "'님의 계정정보가 수정되었습니다");
+                        break;
+                    case "deleteAccountId" :
+                        resultList.add("계정정보삭제");
+                        resultList.add("'" + getParameterMapValue(parameterMap, "accountId") + "'님의 계정정보가 삭제되었습니다");
                         break;
                 }
                 break;

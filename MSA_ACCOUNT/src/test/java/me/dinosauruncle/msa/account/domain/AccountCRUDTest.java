@@ -1,5 +1,7 @@
 package me.dinosauruncle.msa.account.domain;
 
+import me.dinosauruncle.msa.account.controller.AccountController;
+import me.dinosauruncle.msa.account.nonaopservice.CommonService;
 import me.dinosauruncle.msa.account.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +16,12 @@ public class AccountCRUDTest {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    AccountController accountController;
 
 
     @Test
@@ -36,7 +44,8 @@ public class AccountCRUDTest {
         account.setGender(Gender.MALE);
         account.setEmail("tester@naver.com");
         account.setPhone("010-1111-2222");
-        accountService.save(account);
+        accountController.save(account);
+        //accountService.save(account);
     }
 
     @Test
@@ -61,7 +70,7 @@ public class AccountCRUDTest {
     public void delete(){
         Account account = new Account();
         account.setAccountId("test123");;
-        accountService.deleteAccount("test123");
+        accountService.deleteAccount(commonService.SerializationKeyAndValue(2, "m05214"), account);
     }
 
     @Test

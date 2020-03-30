@@ -33,7 +33,7 @@ public class AccountServiceImpl extends AccountService{
     }
 
     @Override
-    public Map<String, Object> update(Account account) {
+    public Map<String, Object> update(Account account, String... strings) {
         Account getAccount = null;
         try {
             getAccount = (Account) getAccount(account.getAccountId()).get("account");
@@ -75,8 +75,17 @@ public class AccountServiceImpl extends AccountService{
     }
 
     @Override
-    public Map<String, Object> deleteAccount(String id) {
+    public Map<String, Object> deleteAccountId(String id, String... strings) {
         Account account = accountRepository.findById(id).get();
+        return delete(account, strings);
+    }
+
+    @Override
+    public Map<String, Object> deleteAccount(String id, Account account) {
+        return delete(account);
+    }
+
+    public Map<String, Object> delete(Account account, String... strings) {
         parameterMap.put("account", account);
         accountRepository.delete(account);
         return parameterMap;

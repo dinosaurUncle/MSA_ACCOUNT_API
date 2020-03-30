@@ -1,7 +1,9 @@
 package me.dinosauruncle.msa.account.controller;
 
 import me.dinosauruncle.msa.account.domain.Account;
+import me.dinosauruncle.msa.account.nonaopservice.CommonService;
 import me.dinosauruncle.msa.account.service.AccountMappingPageService;
+import me.dinosauruncle.msa.account.service.AccountMappingRoleService;
 import me.dinosauruncle.msa.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +18,29 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private CommonService commonService;
+
+    @Autowired
+    private AccountMappingRoleService accountMappingRoleService;
+
 
 
     @PostMapping("")
     public Map<String, Object> save(@RequestBody Account account){
-        return accountService.save(account);
+        Map<String, Object> result = accountService.save(account);
+        accountMappingRoleService.save(account.getAccountId(), "initiator");
+        return result;
     }
 
-    @PutMapping("")
-    public Map<String, Object> update(@RequestBody Account account){
-        return accountService.update(account);
+    @PutMapping("{accountId}")
+    public Map<String, Object> update(@PathVariable("accountId") String accountId, @RequestBody Account account){
+        return accountService.update(account, commonService.SerializationKeyAndValue(2, accountId));
+    }
+    @PutMapping("/admin/{accountId}")
+    public Map<String, Object> updateAfterSelectAccountList(@PathVariable("accountId") String accountId, @RequestBody Account account){
+        accountService.update(account, commonService.SerializationKeyAndValue(2, accountId));
+        return accountService.getAccounts();
     }
     @GetMapping("/{id}")
     public Map<String, Object> getAccountById(@PathVariable("id") String id) {
@@ -43,8 +58,15 @@ public class AccountController {
 
 
     @DeleteMapping("/{id}")
-    public Map<String, Object> deleteAccount(@PathVariable("id") String id){
-        return accountService.deleteAccount(id);
+    public Map<String, Object> deleteAccountId(@PathVariable("id") String id){
+        return accountService.deleteAccountId(id);
+    }
+
+    @DeleteMapping("/admin/{accountId}/{targetAccountId}")
+    public Map<String, Object> deleteAccountAfterSelectAccountList(@PathVariable("accountId") String accountId,
+                                                                   @PathVariable("targetAccountId") String targetAccountId){
+        accountService.deleteAccountId(accountId, commonService.SerializationKeyAndValue(2, targetAccountId));
+        return accountService.getAccounts();
     }
 
     @GetMapping("/isId/{id}")
