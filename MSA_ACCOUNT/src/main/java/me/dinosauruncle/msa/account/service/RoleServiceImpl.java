@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 @Service
 @Transactional
@@ -36,6 +37,13 @@ public class RoleServiceImpl extends RoleService {
         Role role = roleRepository.findById(roleId).get();
         parameterMap.put("role", role);
         roleRepository.delete(role);
+        return parameterMap;
+    }
+
+    @Override
+    public Map<String, Object> getRoles() {
+        List<Role> roles = roleRepository.findAll();
+        parameterMap.put("roles", roles);
         return parameterMap;
     }
 

@@ -280,19 +280,18 @@ public class EventMessageServiceImpl extends EventMessageService {
             case  "RoleServiceImpl" :
                 if (StringUtils.isEmpty(getParameterMapValue(parameterMap, "roleId"))) break;
                 resultList.add("role");
-                role = roleRepository.findById(getParameterMapValue(parameterMap, "roleId")).get();
                 switch (methodName) {
                     case "save" :
                         resultList.add("권한생성");
-                        resultList.add(" [" + role.getRoleName() + "] 권한이 생성 되었습니다");
+                        resultList.add(" [" + getParameterMapValue(parameterMap, "roleId") + "] 권한이 생성 되었습니다");
                         break;
                     case "update" :
                         resultList.add("권한수정");
-                        resultList.add(" [" + role.getRoleName() + "] 권한이 수정 되었습니다");
+                        resultList.add(" [" + getParameterMapValue(parameterMap, "roleId") + "] 권한이 수정 되었습니다");
                         break;
                     case "delete" :
                         resultList.add("권한삭제");
-                        resultList.add(" [" + role.getRoleName() + "] 권한이 삭제 되었습니다");
+                        resultList.add(" [" + getParameterMapValue(parameterMap, "roleId") + "] 권한이 삭제 되었습니다");
                         break;
                 }
                 break;
