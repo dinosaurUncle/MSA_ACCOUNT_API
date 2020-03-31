@@ -26,4 +26,11 @@ public class EventMessageController {
         return eventMessageService.getEventMessagesInfo(eventMessage.getAccountId());
     }
 
+    @GetMapping("")
+    public Map<String, Object> getEventMessageList() {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        returnMap.put("eventMessages", eventMessageService.getEventMessageList());
+        return returnMap;
+    }
+
 }
