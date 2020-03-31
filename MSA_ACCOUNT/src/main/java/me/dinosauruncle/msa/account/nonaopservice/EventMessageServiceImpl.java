@@ -112,24 +112,26 @@ public class EventMessageServiceImpl extends EventMessageService {
 
     @Override
     public List<EventMessage> getEventMessageListFillterByDate(String accountId) {
-        List<String> tempDateStmpList = new ArrayList<String>();
+        Map<String, String> tempDateMap = new HashMap<String, String>();
         List<EventMessage> eventMessages = new ArrayList<EventMessage>();
-        eventMessageRepository.selectByAccountId(accountId).stream().forEach(eventMessage -> {
+        eventMessageRepository.selectByAccountId(accountId).forEach(eventMessage -> {
             LocalDateTime date = eventMessage.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            if (tempDateStmpList.size() == 0){
-                tempDateStmpList.add(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            if (tempDateMap.size() == 0){
+                String tempDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                tempDateMap.put(tempDate, tempDate);
                 eventMessages.add(eventMessage);
             } else {
-                tempDateStmpList.forEach(tempDate -> {
-                    if (tempDate.equals(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
-                        eventMessage.setDate(null);
-                        eventMessages.add(eventMessage);
-                    }
-                    else{
-                        tempDateStmpList.add(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                        eventMessages.add(eventMessage);
-                    }
-                });
+
+                if (tempDateMap.containsKey(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                    eventMessage.setDate(null);
+                    eventMessages.add(eventMessage);
+                }
+                else{
+                    String tempDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    tempDateMap.put(tempDate, tempDate);
+                    eventMessages.add(eventMessage);
+                }
+
             }
         });
 
