@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-@EnableJpaRepositories(basePackages = "me.dinosauruncle.msa.account")
+@EnableJpaRepositories(basePackages = "me.dinosauruncle.service.portal")
 @Configuration
 public class Config {
 

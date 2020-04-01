@@ -22,7 +22,7 @@ public class ServiceAOP {
     @Autowired
     EventMessageService eventMessageService;
 
-    @Before("execution(* me.dinosauruncle.msa.account.service.*.*(..))")
+    @Before("execution(* me.dinosauruncle.service.portal.service.*.*(..))")
     public Object parameterMapClean(JoinPoint joinPoint) throws Throwable{
         List<Object> argsList =  Arrays.asList(joinPoint.getArgs());
         Map<String, String> argsMap = new HashMap<String, String>();
@@ -66,7 +66,7 @@ public class ServiceAOP {
         return retVal;
     }
 
-    @After("execution(* me.dinosauruncle.msa.account.service.*.*(..))")
+    @After("execution(* me.dinosauruncle.service.portal.service.*.*(..))")
     public Object apiCallLogPrint(JoinPoint joinPoint) throws Throwable{
         logger.info("AccountService end function: " + joinPoint.getSignature().getName());
         DefaultService retVal = null;

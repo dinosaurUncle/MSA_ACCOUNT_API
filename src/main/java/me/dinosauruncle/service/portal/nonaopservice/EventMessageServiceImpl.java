@@ -1,6 +1,6 @@
 package me.dinosauruncle.service.portal.nonaopservice;
 
-import me.dinosauruncle.msa.account.domain.*;
+import me.dinosauruncle.service.portal.domain.*;
 import me.dinosauruncle.service.portal.repository.AccountMappingRoleRepository;
 import me.dinosauruncle.service.portal.repository.EventMessageRepository;
 import me.dinosauruncle.service.portal.repository.PageRepository;
