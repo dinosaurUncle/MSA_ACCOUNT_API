@@ -3,53 +3,53 @@
   <component name="ChangeListManager">
     <list default="true" id="558fb5f2-6750-493b-bf58-12a4296f9312" name="Default Changelist" comment="프로젝트명과 패키지명 변경">
       <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/AccountApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/Config.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/SwaggerConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/aop/ServiceAOP.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/AccountController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/AccountMappingPageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/AccountMappingRoleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/EventMessageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/PageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/RoleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/controller/RoleMappingPageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/AccountMappingRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/EventMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/Gender.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/Page.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/domain/RoleMappingPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/nonaopservice/CommonService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/nonaopservice/EventMessageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/nonaopservice/EventMessageServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/AccountMappingRoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/AccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/EventMessageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/PageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/RoleMappingPageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/repository/RoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingPageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingRoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingRoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/AccountService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/AccountServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/DefaultService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/PageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/PageServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/RoleMappingPageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/RoleMappingPageServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/RoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/main/java/me/dinosauruncle/service/portal/service/RoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/AccountCRUDTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/AccountMappingPageCRUDTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/AccountMappingRoleCRUDTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/BasicDataSetting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/EventMessageCRUTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/PageCRUDTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/RoleCRUDTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSA_ACCOUNT/src/test/java/me/dinosauruncle/service/portal/domain/RoleMappingPageCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/AccountApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/aop/ServiceAOP.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/AccountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/AccountMappingPageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/AccountMappingRoleController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/EventMessageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/PageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/RoleController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/controller/RoleMappingPageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/AccountMappingRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/EventMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/Gender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/Page.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/domain/RoleMappingPage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/nonaopservice/CommonService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/nonaopservice/EventMessageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/nonaopservice/EventMessageServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/AccountMappingRoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/AccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/EventMessageRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/PageRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/RoleMappingPageRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/repository/RoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingPageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingRoleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/AccountMappingRoleServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/AccountServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/DefaultService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/PageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/PageServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/RoleMappingPageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/RoleMappingPageServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/RoleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/main/java/me/dinosauruncle/service/portal/service/RoleServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/AccountCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/AccountMappingPageCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/AccountMappingRoleCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/BasicDataSetting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/EventMessageCRUTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/PageCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/RoleCRUDTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SERVICE_PORTAL/src/test/java/me/dinosauruncle/service/portal/domain/RoleMappingPageCRUDTest.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -85,7 +85,7 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="@localhost_mysql" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="msa_account: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="SERVICE_PORTAL: schema" type="c314c289:MysqlImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -1190,14 +1190,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/hibernate_sequence">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/hibernate_sequence">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/page">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/page">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1288,14 +1288,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/role_mapping_page">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/role_mapping_page">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/account_mapping_role">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/account_mapping_role">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1340,7 +1340,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/account">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/account">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1375,7 +1375,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/event_message">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/event_message">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1410,7 +1410,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/msa_account/table/role">
+    <entry file="das://7740c010-1b10-45d5-9420-dd77af4acd8d/schema/SERVICE_PORTAL/table/role">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
