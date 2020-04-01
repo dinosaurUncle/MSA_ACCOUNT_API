@@ -1,0 +1,12 @@
+-- auto-generated definition
+create table ACCOUNT
+(
+    id       varchar(30) not null
+        primary key,
+    name     varchar(30) not null,
+    password varchar(40) not null,
+    gender   int         not null,
+    email    varchar(50) not null,
+    phone    varchar(14) not null
+);
+
