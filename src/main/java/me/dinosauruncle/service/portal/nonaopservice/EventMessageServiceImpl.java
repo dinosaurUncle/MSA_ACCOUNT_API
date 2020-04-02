@@ -164,7 +164,7 @@ public class EventMessageServiceImpl extends EventMessageService {
     @Override
     public String getEventMessageContent(String serviceType, String methodName, String accountId) {
         String returnMessage = "";
-        String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
+        String subStringServiceType = serviceType.substring("me.dinosauruncle.service.portal.service.".length());
             switch (subStringServiceType){
                 case  "AccountMappingRoleServiceImpl" :
                     break;
@@ -205,7 +205,7 @@ public class EventMessageServiceImpl extends EventMessageService {
     private List<String> eventMessageLogicalPartitionResult(String serviceType,
                                                             String methodName, Map<String, Object> parameterMap){
         List<String> resultList = new ArrayList<String>();
-        String subStringServiceType = serviceType.substring("me.dinosauruncle.msa.account.service.".length());
+        String subStringServiceType = serviceType.substring("me.dinosauruncle.service.portal.service.".length());
         Role role = null;
         switch (subStringServiceType){
             case  "AccountMappingRoleServiceImpl" :
