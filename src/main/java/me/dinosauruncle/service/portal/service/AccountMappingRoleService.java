@@ -14,4 +14,5 @@ public abstract class AccountMappingRoleService extends DefaultService {
     public abstract Map<String, Object> delete(String accountId, String roleId, String... strings);
     public abstract AccountMappingRole getAccountMappingRoleByAccountIdAndRoleId(String accountId, String roleId);
     public abstract boolean validationIsExistCheck(String accountId, String roleId);
+    public abstract Map<String, Object> selectByAccountId(String accountId);
 }

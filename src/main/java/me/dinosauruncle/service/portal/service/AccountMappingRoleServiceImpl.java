@@ -69,4 +69,12 @@ public class AccountMappingRoleServiceImpl extends AccountMappingRoleService {
     public boolean validationIsExistCheck(String accountId, String roleId) {
         return accountMappingRoleRepository.selectByAccountIdAndRoleId(accountId, roleId) != null ;
     }
+
+    @Override
+    public Map<String, Object> selectByAccountId(String accountId) {
+        parameterMap.put("accountMappingRole",accountMappingRoleRepository.selectByAccountId(accountId));
+        return parameterMap;
+    }
+
+
 }
