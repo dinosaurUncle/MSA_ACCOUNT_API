@@ -7,6 +7,7 @@ import me.dinosauruncle.service.portal.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,23 +24,27 @@ public class AccountMappingRoleExtendService {
 
     public Map<String, Object> getHighlightData(String accountId){
         List<AccountMappingRole> list = accountMappingRoleService.getAccountMappingRoleByAccountId(accountId);
+        List<Role> listInRoleList = new ArrayList<Role>();
+        list.forEach(accountMappingRole -> {
+            listInRoleList.add(accountMappingRole.getRole());
+        });
         Map<String, Object>resultMap = new HashMap<String, Object>();
-        resultMap.put("accountRoleMappingInfo", list);
+        resultMap.put("roleList", listInRoleList);
         Map<String, Object> roles = roleService.getRoles();
         List<Role> roleList =(List<Role>)roles.get("roles");
-        Map<String, String> roleIdMap = new HashMap<String, String>();
+        Map<String, Role> roleIdMap = new HashMap<String, Role>();
         roleList.forEach(role -> {
-            roleIdMap.put(role.getRoleId(), role.getRoleId());
+            roleIdMap.put(role.getRoleId(), role);
         });
         list.forEach(accountMappingRole -> {
             roleIdMap.remove(accountMappingRole.getRole().getRoleId());
         });
-        List<String> resultList = null;
+        List<Role> resultList = null;
         if (!(roleIdMap.size() == 0)){
-            resultList = roleIdMap.keySet().stream().collect(Collectors.toList());
+            resultList = roleIdMap.values().stream().collect(Collectors.toList());
             resultMap.put("hignLightData", resultList);
         } else {
-            resultMap.put("hignLightData", new String[]{"추가 할 Role이 존재하지 않습니다"});
+            resultMap.put("hignLightData", new String[]{"null"});
         }
         return resultMap;
     }
