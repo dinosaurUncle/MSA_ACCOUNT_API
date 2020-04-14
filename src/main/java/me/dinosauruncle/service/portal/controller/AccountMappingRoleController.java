@@ -27,6 +27,10 @@ public class AccountMappingRoleController {
                 commonService.SerializationKeyAndValue(2, accountId),
                 commonService.SerializationKeyAndValue(3, roleId));
     }
+    @PostMapping("/{accountId}/{roleIds}")
+    public Map<String, Object> save(@PathVariable("accountId") String accountId, @PathVariable("roleIds") String[] roleIds){
+        return accountMappingRoleExtendService.save(accountId, roleIds);
+    }
 
     @GetMapping("detail/{accountId}")
     public Map<String, Object> getHighlightInfoAndRoleMappingInfo(@PathVariable("accountId") String accountId){

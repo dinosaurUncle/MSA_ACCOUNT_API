@@ -22,6 +22,9 @@ public class AccountMappingRoleExtendService {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    CommonService commonService;
+
     public Map<String, Object> getHighlightData(String accountId){
         List<AccountMappingRole> list = accountMappingRoleService.getAccountMappingRoleByAccountId(accountId);
         List<Role> listInRoleList = new ArrayList<Role>();
@@ -46,6 +49,20 @@ public class AccountMappingRoleExtendService {
         } else {
             resultMap.put("hignLightData", new String[]{"null"});
         }
+        return resultMap;
+    }
+
+    public Map<String, Object> save(String accountId, String[] roleIds, String... strings) {
+        Map<String, Object> resultMap = null;
+        List<AccountMappingRole> accountMappingRoles = new ArrayList<AccountMappingRole>();
+        for(String roleId: roleIds){
+            resultMap = accountMappingRoleService.save(accountId, roleId,
+                    commonService.SerializationKeyAndValue(2, accountId),
+                    commonService.SerializationKeyAndValue(3, roleId));
+            accountMappingRoles.add((AccountMappingRole)resultMap.get("accountMappingRole"));
+        }
+        resultMap.clear();
+        resultMap.put("accountMappingRoles", accountMappingRoles);
         return resultMap;
     }
 }
