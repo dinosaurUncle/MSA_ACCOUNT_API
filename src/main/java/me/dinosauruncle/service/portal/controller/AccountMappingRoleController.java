@@ -36,4 +36,11 @@ public class AccountMappingRoleController {
     public Map<String, Object> getHighlightInfoAndRoleMappingInfo(@PathVariable("accountId") String accountId){
         return accountMappingRoleExtendService.getHighlightData(accountId);
     }
+
+    @DeleteMapping("/{accountId}/{roleId}")
+    public Map<String, Object> delete(@PathVariable("accountId") String accountId, @PathVariable("roleId") String roleId){
+        return accountMappingRoleService.delete(accountId, roleId,
+                commonService.SerializationKeyAndValue(2, accountId),
+                commonService.SerializationKeyAndValue(3, roleId));
+    }
 }
